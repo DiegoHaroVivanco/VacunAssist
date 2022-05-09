@@ -1,0 +1,25 @@
+{
+  "name": "vacunassist",
+  "version": "1.0.0",
+  "description": "Proyecto de la materia ing de software 2 de la facultad de informática UNLP",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoHaroVivanco/VacunAssist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DiegoHaroVivanco/VacunAssist/issues"
+  },
+  "homepage": "https://github.com/DiegoHaroVivanco/VacunAssist#readme",
+  "devDependencies": {
+    "nodemon": "2.0.16"
+  }
+}
