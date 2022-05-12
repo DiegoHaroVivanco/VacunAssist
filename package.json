@@ -2,10 +2,10 @@
   "name": "vacunassist",
   "version": "1.0.0",
   "description": "Proyecto de la materia ing de software 2 de la facultad de informática UNLP",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
