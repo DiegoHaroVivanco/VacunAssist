@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../img/icon-vacun.png" type="image/x-icon">
+    <title>Registro</title>
+    <script src="https://kit.fontawesome.com/fdbbc110b3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div class="title">
+                <span>Bienvenido a VacunAssist</span>
+            </div>
+            <form class="formm" action="/registro" method="post">
+                <div class="row">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" name="name" placeholder="Nombre" required>
+                    
+                </div>
+                <div class="row">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" name="ape" placeholder="Apellido" required>
+                    
+                </div>
+                <div class="row">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" name="dni" placeholder="DNI" required>
+                    
+                </div>
+                <div class="row">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="date" name="fechaNacimiento" required>
+                    
+                </div>
+                <div class="row">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" name="zona" placeholder="Zona" required>
+                    
+                </div>
+                <div class="row">
+                    <i class="fas fa-user"></i>
+                    <input type="email" name="email" placeholder="Email" autofocus required">
+                    
+                </div>
+                <div class="row">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                    
+                </div>
+                <div class="row button">
+                    <input type="submit" value="Registrar">                
+                </div>
+
+                <div class="row button">
+                    <input type="submit" value="Cancelar">                
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>
