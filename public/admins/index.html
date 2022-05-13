@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/main.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h2>Bienvenido</h2>
+    <button type="button" onclick = "mostrarVacunatorios();">Visualizar vacunatorios</button> 
+    <div id="vacunatorios">
+        <h3 id="vacunatorio1">Vacunatorio Municipal</h3>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui totam nemo eveniet neque numquam sed quibusdam, deserunt velit, exercitationem a dolores voluptatum. Maiores id commodi quasi sit, architecto provident necessitatibus.</p>
+        <button type="button" onclick="mostrar1();">Cambiar nombre</button>
+        <h3 id="vacunatorio2">Vacunatorio Cementerio</h3>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, blanditiis. Tenetur voluptatum dolorem doloremque suscipit perferendis, asperiores a in ea magnam architecto iusto incidunt adipisci rerum, sit vel blanditiis dolor?</p>
+        <button type="button" onclick="mostrar2();">Cambiar nombre</button>
+        <h3 id="vacunatorio3">Vacunatorio Omnibus</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident illum fugiat eligendi corrupti et illo dignissimos debitis? Quam similique quas iure porro praesentium, nesciunt iusto consectetur! Maiores a labore blanditiis.</p>
+        <button type="button" onclick="mostrar3();">Cambiar nombre</button>
+    </div>
+
+    <form id="form" action="">
+        <br>
+        <input type="text" name="nombreVacunatorio" id="nombreVacunatorio" placeholder="nuevo nombre vacunatorio">
+        <button type="button" onclick="capturarNombre();">Guardar</button>
+    </form>
+
+</body>
+</html>
