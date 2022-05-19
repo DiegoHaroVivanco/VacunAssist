@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="../img/icon-vacun.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../public/login-register/style-register.css">
+    <link rel="shortcut icon" href="../public/img/icon-vacun.png" type="image/x-icon">
+
     <title>Registro</title>
-    <script src="https://kit.fontawesome.com/fdbbc110b3.js" crossorigin="anonymous"></script>
 </head>
-<body>
+
+<body class="container-main">
     <div class="container">
         <div class="wrapper">
             <div class="title">
@@ -18,7 +19,7 @@
             <form class="formm" action="/registro" method="post">
                 <div class="row">
                     <i class="fa-solid fa-key"></i>
-                    <input type="text" name="name" placeholder="Nombre" required>
+                    <input type="text" name="name" placeholder="Nombre" class="input1" required>
                     
                 </div>
                 <div class="row">
@@ -55,12 +56,14 @@
                     <input type="submit" value="Registrar">                
                 </div>
 
-                <div class="row button">
-                    <input type="submit" value="Cancelar">                
+                <div class="row button lin">
+                    <a class="btn" href="/" type="button">Cancelar</a>                
                 </div>
             </form>
         </div>
 
     </div>
+    <script src="https://kit.fontawesome.com/fdbbc110b3.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

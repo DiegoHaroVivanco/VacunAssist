@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 const conexion = require('../database/db')
-const {promisify} = require('util')
-const pathh = require('path')
-
+const { promisify } = require('util')
+const userToken = {
+    tokenHash: ''
+}
 // metodo para registrar
 
-exports.register = async(req, res)=>{
-    try{
+exports.register = async (req, res) => {
+    try {
         const nom = req.body.name
         const ape = req.body.ape
         const dni = req.body.dni
@@ -15,107 +16,155 @@ exports.register = async(req, res)=>{
         const pass = req.body.password
         const fecha = req.body.fechaNacimiento
         const zona = req.body.zona
-        const token = Math.random() * 100 + 1;
+        const token = Math.random().toString(36).substring(2)
+        let tokenHash = await bcryptjs.hash(token, 8)
         let passHash = await bcryptjs.hash(pass, 8)
         //console.log(nom + " - " + ape + " - " + pass)
         //console.log(passHash)
         conexion.query('INSERT INTO Usuarios SET ?', {
-            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: token}, (error, results)=>{
-                if(error){
-                    throw error;
-                }else{
-                    res.redirect('/login')
-                }
+            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: tokenHash
+        }, (error, results) => {
+            if (error) {
+                throw error;
+            } else {
+                res.redirect('/')
+            }
 
-            })
-    }catch(error){
+        })
+    } catch (error) {
         console.log(error)
     }
 
 }
 
-exports.login = async (req, res) =>{
+exports.login = async (req, res) => {
     try {
         const user = req.body.email
         const pass = req.body.password
         const token = req.body.token
         //console.log(user+" - "+pass + " - "+token)
-        if(!user || !pass || !token){
-             res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'))
-            // res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'), {
-            //     alert: true,
-            //     alerTitle: "Advertencia",
-            //     alertMessage: "Nombre de usuario no registrado",
-            //     alertIcon: 'info',
-            //     showConfirmButton: true,
-            //     timer: false,
-            //     ruta: '/login'
-            // })
-        }else{
-            conexion.query('SELECT * FROM Usuarios WHERE email = ?', [user], async(error, results)=>{
-                if(results.length == 0 || !(await bcryptjs.compare(pass, results[0].Pass))){
-                    res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'))
+        if (!user || !pass) {
+            //res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'))
+            res.render('login', {
+                alert: true,
+                alerTitle: "Advertencia",
+                alertMessage: "Ingrese usuario y contraseña",
+                alertIcon: 'info',
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'login'
+            })
 
-                    // res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'), {
-                    //     alert: true,
-                    //     alerTitle: "Advertencia",
-                    //     alertMessage: "Contraseña incorrecta",
-                    //     alertIcon: 'info',
-                    //     showConfirmButton: true,
-                    //     timer: false,
-                    //     ruta: '/login'
-                    // })
+        } else {
+            conexion.query('SELECT * FROM Usuarios WHERE email = ?', [user], async (error, results) => {
+                if (results.length == 0 || !(await bcryptjs.compare(pass, results[0].Pass))) {
+
+                    //res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'))
+
+                    res.render('login', {
+                        alert: true,
+                        alerTitle: "Error",
+                        alertMessage: "Nombre de usuario no registrado y/o contraseña incorrecta",
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'login'
+                    })
                 }
-                else{
+                else {
                     const dni = results[0].dni
-                    const jToken = jwt.sign({dni:dni}, 'super_secret')
-                    console.log("Token: "+jToken+" Para el usuario: "+user)
-                    
+                    const jToken = jwt.sign({ dni: dni }, 'super_secret')
+                    console.log("Token: " + jToken + " Para el usuario: " + user)
+                    console.log("token creado: "+results[0].token === token)
+                    userToken.tokenHash = results[0].token
                     const cookiesOptions = {
-                        expires: new Date(Date.now() + 90 * 24*60*60*1000),
+                        expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
                         httpOnly: true
                     }
                     res.cookie('jwt', jToken, cookiesOptions)
-                    res.sendFile(pathh.resolve(__dirname, '../public/dash.html'))
-
-                    // res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'), {
+                    // res.render('login', {           
                     //     alert: true,
-                    //     alerTitle: "Conexion exitosa",
-                    //     alertMessage: "Login correcto",
-                    //     alertIcon: 'succes',
+
+                    //     alerTitle: "Login correcto",
+                    //     alertMessage: "dsada",
+                    //     alertIcon: 'success',
                     //     showConfirmButton: false,
                     //     timer: 800,
-                    //     ruta: ''
+                    //     ruta: 'dash'
                     // })
+
+                    res.render('login', {
+                        alert: true,
+                        alerTitle: "",
+                        alertMessage: "Ingrese el token de seguridad",
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        ruta: 'autenticar'
+                    })
                 }
             })
         }
 
     } catch (error) {
         console.log(error)
-    }    
+    }
 }
 
-exports.isAuthenticated = async (req, res, next) =>{
-    if(req.cookies.jwt){
+exports.autenticar =  async (req, res) =>{
+    try {
+        const token = req.body.token
+        console.log(token)
+        console.log(userToken.tokenHash)
+        console.log(token === userToken.tokenHash)
+            //if(await bcryptjs.compare(token, user.tokenHash)){
+            if(token === userToken.tokenHash){  
+            res.render('autenticar', {           
+                        alert: true,
+                        alerTitle: "Token correcto",
+                        alertMessage: "Inicio de sesion correcto",
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 800,
+                        ruta: 'dash'
+                    })
+            }else{
+                res.render('autenticar', {           
+                    alert: true,
+                    alerTitle: "Error",
+                    alertMessage: "Token de seguridad icorrecto",
+                    alertIcon: 'error',
+                    showConfirmButton: false,
+                    timer: false,
+                    ruta: 'login'
+                })
+            }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+exports.isAuthenticated = async (req, res, next) => {
+    if (req.cookies.jwt) {
         try {
             const decodificada = await promisify(jwt.verify)(req.cookies.jwt, 'super_secret')
-            conexion.query('SELECT * FROM Usuarios WHERE dni = ?', [decodificada.dni], (error, results) =>{
-                if(!results){return next()}
+            conexion.query('SELECT * FROM Usuarios WHERE dni = ?', [decodificada.dni], (error, results) => {
+                if (!results) { return next() }
                 req.user = results[0]
                 return next(); // pasa a ejecutar el siguiente middleware
             })
-            
+
         } catch (error) {
             console.log(error)
             return next()
         }
-    }else{
+    } else {
         res.redirect('/login')
     }
 }
 
-exports.logout = (req, res) =>{
+exports.logout = (req, res) => {
     res.clearCookie('jwt')
     return res.redirect('/login')
 }
