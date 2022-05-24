@@ -10,7 +10,6 @@ const app = express()
 
 app.set('view engine', 'ejs')
 
-// seteamos la carpeta public
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
@@ -27,11 +26,12 @@ app.use(function (req, res, next){
 // para poder trabajar con las cookies
 app.use(cookieParser())
 
-// rutas para las vistas
-app.get('/dash', authController.isAuthenticated,(req, res)=>{
-    //conexion.end();
-    res.sendFile(pathh.resolve(__dirname, 'public/area-paciente/dash.html'))
-    // res.render('dash')
+// RUTAS PARA LA VISTA
+
+// rutas de usuarios
+app.get('/registro', (req, res)=>{
+    //res.sendFile(pathh.resolve(__dirname, 'public/login-register/register.html'))
+    res.render('register', {alert:false})
 })
 
 app.get('/login', (req, res)=>{
@@ -39,29 +39,48 @@ app.get('/login', (req, res)=>{
     res.render('login', {alert:false})
 })
 
-app.get('/registro', (req, res)=>{
-    //res.sendFile(pathh.resolve(__dirname, 'public/login-register/register.html'))
-    res.render('register')
-})
-
-app.get('/registro/cargarvacunas', (req, res)=>{
-    res.render('cargarVacunas')
-})
-
 app.get('/autenticar', (req, res)=>{
     res.render('autenticar', {alert:false})
 })
+
+app.get('/recuperar-contraseña', (req, res)=>{
+    res.render('recuperarPass')
+})
+
+app.get('/dash', authController.isAuthenticated,(req, res)=>{
+    //conexion.end();
+    //res.sendFile(pathh.resolve(__dirname, 'public/area-paciente/dash.html'))
+     res.render('dash')
+})
+
+
+// rutas de admin
+app.get('/autenticacion', (req, res)=>{
+    res.render('inicioAdmin', {alert:false})
+})
+app.get('/areaPersonalAdmin', (req, res)=>{
+    //res.sendFile(pathh.resolve(__dirname,'public/admins/indexx.html'))
+    res.render('dash-admin', {alert: false})
+})
+
+// 4 digitos - token
+// admin carga contraseña, y se le envia el mail del vacunador
+// terminal de omnibus, municipalidad y cementerio municipal
 
 app.get('/', (req, res)=>{
     //conexion.end();
     res.sendFile(pathh.resolve(__dirname, 'public/login-register/index.html'))
 })
 
-// rutas para metodos del controlador
+// RUTAS PARA METODOS DEL CONTROLADOR
 app.post('/registro', authController.register)
 app.post('/login', authController.login)
 app.get('/logout', authController.logout)
 app.post('/autenticar', authController.autenticar)
+app.post('/autenticacion', authController.loginAdmin)
+app.put('/recuperar-contraseña', authController.recuperarContraseña)
+
+
 app.listen(3000, ()=>{
     console.log('Server corriendo en http://localhost:3000')
 })
