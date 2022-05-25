@@ -3,6 +3,8 @@ const bcryptjs = require('bcryptjs')
 const conexion = require('../database/db')
 const { promisify } = require('util')
 const { transporter } = require('../config/mailer') // para enviar el mail
+
+
 const userToken = {
     tokenHash: ''
 }
@@ -14,10 +16,11 @@ exports.register = async (req, res) => {
         const ape = req.body.ape
         const dni = req.body.dni
         const email = req.body.email
-        const pass = req.body.password
+        const pass = req.body.password // contraseña no debe ser mayor a 8 digitos
         const fecha = req.body.fechaNacimiento
         const zona = req.body.zona
-        const token = Math.random().toString(36).substring(2)
+        // FALTA ENVIAR TOKEN POR MAIL
+        const token = Math.random().toString(36).substring(8) //token 4 digitos
         let tokenHash = await bcryptjs.hash(token, 8)
         let passHash = await bcryptjs.hash(pass, 8)
         //console.log(nom + " - " + ape + " - " + pass)
@@ -47,11 +50,11 @@ exports.register = async (req, res) => {
                 } else {
                     res.render('register', {
                     alert: true,
-                    alerTitle: "",
-                    alertMessage: "Registro exitoso",
+                    alerTitle: "Registro exitoso",
+                    alertMessage: "Se envió un token al email ingresado",
                     alertIcon: 'success',
                     showConfirmButton: false,
-                    timer: 2000,
+                    timer: 3000,
                     ruta: 'login' // despues tiene que ir a la ruta para cargar vacunas
                 })
 
@@ -128,7 +131,7 @@ exports.login = async (req, res) => {
                         alertMessage: "Ingrese el token de seguridad",
                         alertIcon: 'success',
                         showConfirmButton: false,
-                        timer: 2000,
+                        timer: 3000,
                         ruta: 'autenticar'
                     })
                 }
@@ -154,7 +157,7 @@ exports.autenticar = (req, res) => {
                 alertMessage: "Inicio de sesion correcto",
                 alertIcon: 'success',
                 showConfirmButton: false,
-                timer: 800,
+                timer: 2500,
                 ruta: 'dash'
             })
         } else {
@@ -198,9 +201,12 @@ exports.logout = (req, res) => {
     return res.redirect('/login')
 }
 
-exports.recuperarContraseña =  (req, res) =>{
-   
-}
+// exports.recuperarContraseña =  (req, res) =>{
+//    const email = req.body.email
+
+
+
+// }
 
 
 // controlers del admin
@@ -235,4 +241,41 @@ exports.loginAdmin = (req, res) =>{
     })
 }
 
+exports.registerPaciente = async (req, res) => {
+    try {
+        const nom = req.body.name
+        const ape = req.body.ape
+        const dni = req.body.dni
+        const email = req.body.email
+        const pass = Math.random().toString(36).substring(5)// contraseña no debe ser mayor a 8 digitos
+        const fecha = req.body.fechaNacimiento
+        const zona = req.body.zona
+        const token = Math.random().toString(36).substring(8) //token 4 digitos
+        let tokenHash = await bcryptjs.hash(token, 8)
+        let passHash = await bcryptjs.hash(pass, 8)
 
+        conexion.query('INSERT INTO Usuarios SET ?', {
+            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: tokenHash
+            }, (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    res.render('registrarPaciente', {
+                    alert: true,
+                    alerTitle: "Registro exitoso",
+                    alertMessage: "Se envió la contraseña y un token al email ingresado",
+                    alertIcon: 'success',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    ruta: 'areaPersonalAdmin'
+                    })
+
+                }
+
+            })
+          
+    } catch (error) {
+        console.log(error)
+    }
+
+}

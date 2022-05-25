@@ -7,23 +7,22 @@
     <link rel="stylesheet" type="text/css" href="../public/login-register/style-admin.css">
     <link rel="shortcut icon" href="../public/img/icon-vacun.png" type="image/x-icon">
 
-    <title>Bienvenido</title>
+    <title>Recuperar contraseña</title>
 </head>
 <body class="container-main">
     <div class="container">
         <div class="wrapper">
 
             <div class="title">
-                <h2>Bienvenido</h2>
-                <h4>Ingrese el token de seguridad</h4>
+                <h2>Ingrese su email</h2>
             </div>
-            <form class="formm" action="/autenticacion" method="post">
+            <form class="formm" action="/recuperar-contraseña" method="post">
                 <div class="row">
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="token" placeholder="Token" required>
+                    <input type="email" name="email" placeholder="Email" required>
                 </div>
                 <div class="row button">
-                    <input type="submit" value="Ingresar">
+                    <input type="submit" value="Enviar">
                 </div>
             </form>
        </div>
@@ -45,8 +44,6 @@
 
         </script>
     <%} %>
-
+    
 </body>
 </html>
-
-<!-- dash de prueba -->

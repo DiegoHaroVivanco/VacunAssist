@@ -3,10 +3,12 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const pathh = require('path')
 const authController = require('./controllers/authController')
+const middleware = require('./middlewares/validacion-user')
+// const {body, validationResult} = require('express-validator')
 
-// conexiones
-//const conexion = require('./database/db')
 const app = express()
+
+
 
 app.set('view engine', 'ejs')
 
@@ -63,6 +65,10 @@ app.get('/areaPersonalAdmin', (req, res)=>{
     res.render('dash-admin', {alert: false})
 })
 
+app.get('/areaPersonalAdmin/registroPaciente', (req, res)=>{
+    res.render('registrarPaciente', {alert:false})
+})
+
 // 4 digitos - token
 // admin carga contraseña, y se le envia el mail del vacunador
 // terminal de omnibus, municipalidad y cementerio municipal
@@ -73,12 +79,14 @@ app.get('/', (req, res)=>{
 })
 
 // RUTAS PARA METODOS DEL CONTROLADOR
-app.post('/registro', authController.register)
+app.post('/registro', middleware.validacionUsuario, middleware.usuarioResult, authController.register)
 app.post('/login', authController.login)
 app.get('/logout', authController.logout)
 app.post('/autenticar', authController.autenticar)
 app.post('/autenticacion', authController.loginAdmin)
-app.put('/recuperar-contraseña', authController.recuperarContraseña)
+app.post('/registroPaciente', authController.registerPaciente)
+
+//app.put('/recuperar-contraseña', authController.recuperarContraseña)
 
 
 app.listen(3000, ()=>{
