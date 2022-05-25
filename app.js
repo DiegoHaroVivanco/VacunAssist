@@ -45,18 +45,18 @@ app.get('/autenticar', (req, res)=>{
     res.render('autenticar', {alert:false})
 })
 
-app.get('/recuperar-contraseña', (req, res)=>{
-    res.render('recuperarPass')
+app.get('/recuperar-pass', (req, res)=>{
+    res.render('recuperarPass', {alert:false})
 })
 
-app.get('/dash', authController.isAuthenticated,(req, res)=>{
+app.get('/areaPersonal', authController.isAuthenticated,(req, res)=>{
     //conexion.end();
     //res.sendFile(pathh.resolve(__dirname, 'public/area-paciente/dash.html'))
      res.render('dash')
 })
 
 
-// rutas de admin
+// RUTAS DE ADMIN
 app.get('/autenticacion', (req, res)=>{
     res.render('inicioAdmin', {alert:false})
 })
@@ -86,7 +86,8 @@ app.post('/autenticar', authController.autenticar)
 app.post('/autenticacion', authController.loginAdmin)
 app.post('/registroPaciente', authController.registerPaciente)
 
-//app.put('/recuperar-contraseña', authController.recuperarContraseña)
+app.post('/recuperar-pass', authController.recuperarContraseña) // ¿faltaria un post o put?
+app.put('/recuperar-pass', authController.recuperarContraseña) // ¿faltaria un post o put?
 
 
 app.listen(3000, ()=>{

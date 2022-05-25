@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../public/login-register/style-admin.css">
+    <link rel="stylesheet" type="text/css" href="../public/login-register/style-password.css">
     <link rel="shortcut icon" href="../public/img/icon-vacun.png" type="image/x-icon">
 
     <title>Recuperar contraseña</title>
@@ -16,13 +16,16 @@
             <div class="title">
                 <h2>Ingrese su email</h2>
             </div>
-            <form class="formm" action="/recuperar-contraseña" method="post">
+            <form class="formm" action="/recuperar-pass" method="post">
                 <div class="row">
                     <i class="fas fa-lock"></i>
                     <input type="email" name="email" placeholder="Email" required>
                 </div>
                 <div class="row button">
                     <input type="submit" value="Enviar">
+                </div>
+                <div class="row button lin">
+                    <a class="btn" href="/login" type="button">Cancelar</a>                
                 </div>
             </form>
        </div>

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 const conexion = require('../database/db')
 const { promisify } = require('util')
-const { transporter } = require('../config/mailer') // para enviar el mail
+const transporter = require('../config/mailer') // para enviar el mail
 
 
 const userToken = {
@@ -158,7 +158,7 @@ exports.autenticar = (req, res) => {
                 alertIcon: 'success',
                 showConfirmButton: false,
                 timer: 2500,
-                ruta: 'dash'
+                ruta: 'areaPersonal'
             })
         } else {
             res.render('autenticar', {
@@ -201,12 +201,62 @@ exports.logout = (req, res) => {
     return res.redirect('/login')
 }
 
-// exports.recuperarContraseña =  (req, res) =>{
-//    const email = req.body.email
+exports.recuperarContraseña = async (req, res) =>{
+    const email = req.body.email
+    const passTemporal = Math.random().toString(36).substring(5)
+    const linkLogin = `http://localhost:3000/login`
 
+    try {
+        //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
+        conexion.query('SELECT * FROM Usuarios WHERE email = ?', [email],  async(error, results) => {
+            console.log(results.length == 0 ) // para controlar si el mail existe o no
+            if(results.length == 0 || results[0].Email !== email){
+                res.render('recuperarPass', {
+                    alert: true,
+                    alerTitle: "Error",
+                    alertMessage: "Email inválido",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: false,
+                    ruta: 'login'
+                })
+            }else{
+                // actualizo la contraseña en la db para el email ingresado
+                conexion.query("UPDATE Usuarios SET Pass = '"+passTemporal+"' WHERE Email='"+email+"'", async (error, results)=>{
+                    if(error) throw error;
+                    console.log(results[0])
+                    res.render('recuperarPass', {
+                        alert: true,
+                        alerTitle: "",
+                        alertMessage: "Se envió una contraseña temporal al email ingresado",
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        ruta: 'login'
+                        })
+              
+                    await transporter.sendMail({ // envío email al campo que ingreso el usuario
+                        from: '"Recuperación de contraseña"',
+                        to: email,
+                        subject: "Recuperacion de contraseña",
+                        html: `
+                            <b>Tu nueva contraseña temporal es: </b>
+                            <p> ${passTemporal}</p>
+                            <b>Inicia sesión ingresando a: </b>
+                            <a href="${linkLogin}">${linkLogin}</a>
+                        `
+                    })
+                })
 
+            }   
+            
 
-// }
+        })        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 
 
 // controlers del admin
