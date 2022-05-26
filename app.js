@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser')
 const pathh = require('path')
 const authController = require('./controllers/authController')
 const middleware = require('./middlewares/validacion-user')
-// const {body, validationResult} = require('express-validator')
+const middlewareVacunador = require('./middlewares/validacion-vacundaor')
 
 const app = express()
 
@@ -28,16 +28,14 @@ app.use(function (req, res, next){
 // para poder trabajar con las cookies
 app.use(cookieParser())
 
-// RUTAS PARA LA VISTA
+// ---- RUTAS PARA LA VISTA ----
 
-// rutas de usuarios
+// RUTAS DE USUARIOS
 app.get('/registro', (req, res)=>{
-    //res.sendFile(pathh.resolve(__dirname, 'public/login-register/register.html'))
     res.render('register', {alert:false})
 })
 
 app.get('/login', (req, res)=>{
-    //res.sendFile(pathh.resolve(__dirname, 'public/login-register/login.html'))
     res.render('login', {alert:false})
 })
 
@@ -51,8 +49,13 @@ app.get('/recuperar-pass', (req, res)=>{
 
 app.get('/areaPersonal', authController.isAuthenticated,(req, res)=>{
     //conexion.end();
-    //res.sendFile(pathh.resolve(__dirname, 'public/area-paciente/dash.html'))
      res.render('dash')
+})
+
+// RUTAS DE VACUNADOR
+
+app.get('/loginVacunador', (req, res) => {
+    res.render('loginVacunador', {alert:false})
 })
 
 
@@ -61,12 +64,11 @@ app.get('/autenticacion', (req, res)=>{
     res.render('inicioAdmin', {alert:false})
 })
 app.get('/areaPersonalAdmin', (req, res)=>{
-    //res.sendFile(pathh.resolve(__dirname,'public/admins/indexx.html'))
     res.render('dash-admin', {alert: false})
 })
 
-app.get('/areaPersonalAdmin/registroPaciente', (req, res)=>{
-    res.render('registrarPaciente', {alert:false})
+app.get('/areaPersonalAdmin/registroVacunador', (req, res)=>{
+    res.render('registrarVacunador', {alert:false})
 })
 
 // 4 digitos - token
@@ -78,17 +80,17 @@ app.get('/', (req, res)=>{
     res.sendFile(pathh.resolve(__dirname, 'public/login-register/index.html'))
 })
 
-// RUTAS PARA METODOS DEL CONTROLADOR
+// ----- RUTAS PARA METODOS DEL CONTROLADOR ----
 app.post('/registro', middleware.validacionUsuario, middleware.usuarioResult, authController.register)
 app.post('/login', authController.login)
 app.get('/logout', authController.logout)
 app.post('/autenticar', authController.autenticar)
 app.post('/autenticacion', authController.loginAdmin)
-app.post('/registroPaciente', authController.registerPaciente)
+app.post('/registroVacunador', middlewareVacunador.validacionUsuarioVacunador, middlewareVacunador.usuarioResult,authController.registerVacunador)
 
 app.post('/recuperar-pass', authController.recuperarContraseña) // ¿faltaria un post o put?
 app.put('/recuperar-pass', authController.recuperarContraseña) // ¿faltaria un post o put?
-
+app.post('/loginVacunador')
 
 app.listen(3000, ()=>{
     console.log('Server corriendo en http://localhost:3000')

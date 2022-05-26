@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="./js/mian.js"></script>
+    <title>Vacunatorios</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido</h1>
+    </header>
+    <main>
+        <button type="button" onclick = "mostrarVacunatorios();">Visualizar vacunatorios</button> 
+        
+        <div id="vacunatorios">
+            
+            <h3 id="vacunatorio1">Vacunatorio Municipal</h3>
+            <button type="button" onclick="mostrar1();">Cambiar nombre</button>
+            <form id="formulario1" action="">
+                <input type="text" name="nomVac1" id="nomVac1" placeholder="nuevo nombre vacunatorio" onclick="capturarInputA();">
+                <button type="button" onclick="capturar1();">Guardar</button>
+            </form>
+
+            <h3 id="vacunatorio2">Vacunatorio Cementerio</h3>
+            <button type="button" onclick="mostrar2();">Cambiar nombre</button>
+            <form id="formulario2" action="">
+                <input type="text" name="nomVac2" id="nomVac2" placeholder="nuevo nombre vacunatorio" onclick="capturarInputB();">
+                <button type="button" onclick="capturar2();">Guardar</button>
+            </form>
+        
+            <h3 id="vacunatorio3">Vacunatorio Omnibus</h3>
+            <button type="button" onclick="mostrar3();">Cambiar nombre</button>
+            <form id="formulario3" action="">
+                <input type="text" name="nomVac3" id="nomVac3" placeholder="nuevo nombre vacunatorio" onclick="capturarInputC();">
+                <button type="button" onclick="capturar3();">Guardar</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

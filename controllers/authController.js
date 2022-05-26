@@ -91,8 +91,6 @@ exports.login = async (req, res) => {
             conexion.query('SELECT * FROM Usuarios WHERE email = ?', [user], async (error, results) => {
                 if (results.length == 0 || !(await bcryptjs.compare(pass, results[0].Pass))) {
 
-                    //res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'))
-
                     res.render('login', {
                         alert: true,
                         alerTitle: "Error",
@@ -291,7 +289,7 @@ exports.loginAdmin = (req, res) =>{
     })
 }
 
-exports.registerPaciente = async (req, res) => {
+exports.registerVacunador = async (req, res) => {
     try {
         const nom = req.body.name
         const ape = req.body.ape
@@ -303,26 +301,57 @@ exports.registerPaciente = async (req, res) => {
         const token = Math.random().toString(36).substring(8) //token 4 digitos
         let tokenHash = await bcryptjs.hash(token, 8)
         let passHash = await bcryptjs.hash(pass, 8)
+        const linkLogin = `http://localhost:3000/loginVacunador`
 
-        conexion.query('INSERT INTO Usuarios SET ?', {
-            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: tokenHash
-            }, (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    res.render('registrarPaciente', {
-                    alert: true,
-                    alerTitle: "Registro exitoso",
-                    alertMessage: "Se envió la contraseña y un token al email ingresado",
-                    alertIcon: 'success',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    ruta: 'areaPersonalAdmin'
+        conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
+            if(results.length == 0){ // no hay usuarios registrados con el email ingresado
+                
+                conexion.query('INSERT INTO Usuarios SET ?', {
+                    dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: tokenHash
+                    }, async (error, results) => {
+                        if (error) {
+                            throw error;
+                        } else {
+                            res.render('registrarVacunador', {
+                            alert: true,
+                            alerTitle: "Registro exitoso",
+                            alertMessage: "Se envió la contraseña y un token al email ingresado",
+                            alertIcon: 'success',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            ruta: 'areaPersonalAdmin'
+                            })
+                            
+                            await transporter.sendMail({ // envío email al campo que ingreso el usuario
+                                from: '"Recuperación de contraseña"',
+                                to: email,
+                                subject: "Recuperacion de contraseña",
+                                html: `
+                                    <b>Tu nueva contraseña temporal es: </b>
+                                    <p> ${pass}</p>
+                                    <b>Inicia sesión ingresando a: </b>
+                                    <a href="${linkLogin}">${linkLogin}</a>
+                                `
+                            })
+
+                        }
+        
                     })
+            }else{
+                res.render('registrarVacunador', {
+                    alert: true,
+                    alerTitle: "Error",
+                    alertMessage: "El email imgresado ya se encuentra registrado",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: false,
+                    ruta: 'areaPersonalAdmin/registroVacunador'
+                })
+            }
+            
+        })
 
-                }
-
-            })
+        
           
     } catch (error) {
         console.log(error)
