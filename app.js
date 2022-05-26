@@ -1,14 +1,12 @@
 const express = require('express')
-//const dotenv = require('dotenv') // para las variables de entorno
 const cookieParser = require('cookie-parser')
 const pathh = require('path')
 const authController = require('./controllers/authController')
+const controllerVacunador = require('./controllers/controllerVacunador')
 const middleware = require('./middlewares/validacion-user')
 const middlewareVacunador = require('./middlewares/validacion-vacundaor')
 
 const app = express()
-
-
 
 app.set('view engine', 'ejs')
 
@@ -58,6 +56,19 @@ app.get('/loginVacunador', (req, res) => {
     res.render('loginVacunador', {alert:false})
 })
 
+app.get('/autenticarVacunador', (req, res)=>{
+    res.render('autenticarVacunador', {alert:false})
+})
+
+app.get('/recuperar-passVacunador', (req, res)=>{
+    res.render('recuperarPassVacunador', {alert:false})
+})
+
+app.get('/areaPersonalVacunador', controllerVacunador.isAuthenticated,(req, res)=>{
+    //conexion.end();
+     res.render('dashVacunador')
+})
+
 
 // RUTAS DE ADMIN
 app.get('/autenticacion', (req, res)=>{
@@ -88,9 +99,16 @@ app.post('/autenticar', authController.autenticar)
 app.post('/autenticacion', authController.loginAdmin)
 app.post('/registroVacunador', middlewareVacunador.validacionUsuarioVacunador, middlewareVacunador.usuarioResult,authController.registerVacunador)
 
-app.post('/recuperar-pass', authController.recuperarContraseña) // ¿faltaria un post o put?
-app.put('/recuperar-pass', authController.recuperarContraseña) // ¿faltaria un post o put?
-app.post('/loginVacunador')
+app.post('/recuperar-pass', authController.recuperarContraseña)
+app.put('/recuperar-pass', authController.recuperarContraseña) 
+
+app.post('/loginVacunador', controllerVacunador.login)
+app.post('/autenticarVacunador', controllerVacunador.autenticar)
+app.post('/recuperar-passVacunador', controllerVacunador.recuperarContraseña)
+app.put('/recuperar-passVacunador', controllerVacunador.recuperarContraseña)
+app.get('/logoutVacunador', controllerVacunador.logout)
+
+
 
 app.listen(3000, ()=>{
     console.log('Server corriendo en http://localhost:3000')

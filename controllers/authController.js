@@ -3,8 +3,6 @@ const bcryptjs = require('bcryptjs')
 const conexion = require('../database/db')
 const { promisify } = require('util')
 const transporter = require('../config/mailer') // para enviar el mail
-
-
 const userToken = {
     tokenHash: ''
 }
@@ -21,7 +19,7 @@ exports.register = async (req, res) => {
         const zona = req.body.zona
         // FALTA ENVIAR TOKEN POR MAIL
         const token = Math.random().toString(36).substring(8) //token 4 digitos
-        let tokenHash = await bcryptjs.hash(token, 8)
+        // let tokenHash = await bcryptjs.hash(token, 8)
         let passHash = await bcryptjs.hash(pass, 8)
         //console.log(nom + " - " + ape + " - " + pass)
         //console.log(passHash)
@@ -43,7 +41,7 @@ exports.register = async (req, res) => {
         // })
 
         conexion.query('INSERT INTO Usuarios SET ?', {
-            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: tokenHash
+            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: token
             }, (error, results) => {
                 if (error) {
                     throw error;
@@ -76,7 +74,6 @@ exports.login = async (req, res) => {
         const token = req.body.token
         //console.log(user+" - "+pass + " - "+token)
         if (!user || !pass) {
-            //res.sendFile(pathh.resolve(__dirname, '../public/login-register/login.html'))
             res.render('login', {
                 alert: true,
                 alerTitle: "Advertencia",
@@ -107,21 +104,11 @@ exports.login = async (req, res) => {
                     console.log("Token: " + jToken + " Para el usuario: " + user)
                     console.log("token creado: " + results[0].token === token)
                     userToken.tokenHash = results[0].token
-                    const cookiesOptions = {
+                     const cookiesOptions = {
                         expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
                         httpOnly: true
                     }
                     res.cookie('jwt', jToken, cookiesOptions)
-                    // res.render('login', {           
-                    //     alert: true,
-
-                    //     alerTitle: "Login correcto",
-                    //     alertMessage: "dsada",
-                    //     alertIcon: 'success',
-                    //     showConfirmButton: false,
-                    //     timer: 800,
-                    //     ruta: 'dash'
-                    // })
 
                     res.render('login', {
                         alert: true,
@@ -202,6 +189,7 @@ exports.logout = (req, res) => {
 exports.recuperarContraseña = async (req, res) =>{
     const email = req.body.email
     const passTemporal = Math.random().toString(36).substring(5)
+    let passHash = await bcryptjs.hash(passTemporal, 8)
     const linkLogin = `http://localhost:3000/login`
 
     try {
@@ -220,7 +208,7 @@ exports.recuperarContraseña = async (req, res) =>{
                 })
             }else{
                 // actualizo la contraseña en la db para el email ingresado
-                conexion.query("UPDATE Usuarios SET Pass = '"+passTemporal+"' WHERE Email='"+email+"'", async (error, results)=>{
+                conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE Email='"+email+"'", async (error, results)=>{
                     if(error) throw error;
                     console.log(results[0])
                     res.render('recuperarPass', {
@@ -299,7 +287,7 @@ exports.registerVacunador = async (req, res) => {
         const fecha = req.body.fechaNacimiento
         const zona = req.body.zona
         const token = Math.random().toString(36).substring(8) //token 4 digitos
-        let tokenHash = await bcryptjs.hash(token, 8)
+        // let tokenHash = await bcryptjs.hash(token, 8)
         let passHash = await bcryptjs.hash(pass, 8)
         const linkLogin = `http://localhost:3000/loginVacunador`
 
@@ -307,7 +295,7 @@ exports.registerVacunador = async (req, res) => {
             if(results.length == 0){ // no hay usuarios registrados con el email ingresado
                 
                 conexion.query('INSERT INTO Usuarios SET ?', {
-                    dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: tokenHash
+                    dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: token
                     }, async (error, results) => {
                         if (error) {
                             throw error;
@@ -323,12 +311,14 @@ exports.registerVacunador = async (req, res) => {
                             })
                             
                             await transporter.sendMail({ // envío email al campo que ingreso el usuario
-                                from: '"Recuperación de contraseña"',
+                                from: '"Contraseña y token de seguridad"',
                                 to: email,
-                                subject: "Recuperacion de contraseña",
+                                subject: "Contraseña temporal",
                                 html: `
-                                    <b>Tu nueva contraseña temporal es: </b>
+                                    <b>Tu contraseña temporal es: </b>
                                     <p> ${pass}</p>
+                                    <b>Tu token de seguridad es: </b>
+                                    <p> ${token}</p>
                                     <b>Inicia sesión ingresando a: </b>
                                     <a href="${linkLogin}">${linkLogin}</a>
                                 `

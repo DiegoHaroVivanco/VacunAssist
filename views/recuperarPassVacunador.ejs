@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../public/login-register/style-login.css">
+    <link rel="stylesheet" type="text/css" href="../public/login-register/style-password.css">
     <link rel="shortcut icon" href="../public/img/icon-vacun.png" type="image/x-icon">
-    <title>Inicio de sesion</title>
-</head>
 
+    <title>Recuperar contraseña</title>
+</head>
 <body class="container-main">
     <div class="container">
         <div class="wrapper">
-            <div class="title">
-                <span>Bienvenido a VacunAssist</span>
-            </div>
-            <form class="formm" action="/loginVacunador" method="post">
-                <div class="row">
-                    <i class="fas fa-user"></i>
-                    <input type="email" name="email" placeholder="Email" autofocus required">
 
-                </div>
+            <div class="title">
+                <h2>Ingrese su email</h2>
+            </div>
+            <form class="formm" action="/recuperar-passVacunador" method="post">
                 <div class="row">
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Contraseña" required>
-
+                    <input type="email" name="email" placeholder="Email" required>
                 </div>
-
-                <div class="pass"><a href="/recuperar-passVacunador">Recuperar contraseña</a></div>
                 <div class="row button">
-                    <input type="submit" value="Ingresar">
+                    <input type="submit" value="Enviar">
+                </div>
+                <div class="row button lin">
+                    <a class="btn" href="/loginVacunador" type="button">Cancelar</a>                
                 </div>
             </form>
-        </div>
-
-    </div>
+       </div>
+    </div>       
     <script src="https://kit.fontawesome.com/fdbbc110b3.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -53,7 +47,6 @@
 
         </script>
     <%} %>
-
+    
 </body>
-
 </html>
