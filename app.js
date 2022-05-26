@@ -5,12 +5,29 @@ const authController = require('./controllers/authController')
 const controllerVacunador = require('./controllers/controllerVacunador')
 const middleware = require('./middlewares/validacion-user')
 const middlewareVacunador = require('./middlewares/validacion-vacundaor')
+const mime = require('mime');
 
 const app = express()
 
 app.set('view engine', 'ejs')
 
-app.use(express.static('public'))
+
+// escribimos la función que creará nuestra cabecera
+const setHeadersOnStatic = (res, path, stat) => {
+    const type = mime.getType(path);
+    res.set('content-type', type);
+}
+  
+// creamos el objeto con las opciones
+const staticOptions = {
+    setHeaders: setHeadersOnStatic
+}
+  
+  // usamos las opciones
+  app.use(express.static(pathh.join(__dirname, 'public'), staticOptions));
+
+// app.use(express.static('public'))
+
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use('/public', express.static('public'))
@@ -65,12 +82,25 @@ app.get('/recuperar-passVacunador', (req, res)=>{
 })
 
 app.get('/areaPersonalVacunador', controllerVacunador.isAuthenticated,(req, res)=>{
-    //conexion.end();
      res.render('dashVacunador')
 })
 
+app.get('/areaPersonalVacunador/dashboard.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/dashboard.js')
+})
+
+app.get('/areaPersonalVacunador/editarperfil', (req, res)=>{
+    res.sendFile(__dirname + '/public/area-vacunador/perfil.html')
+
+})
+
+app.get('/areaPersonalVacunador/js/perfilvacunador.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/area-vacunador/js/perfilvacunador.js')
+
+})
 
 // RUTAS DE ADMIN
+
 app.get('/autenticacion', (req, res)=>{
     res.render('inicioAdmin', {alert:false})
 })
@@ -78,9 +108,38 @@ app.get('/areaPersonalAdmin', (req, res)=>{
     res.render('dash-admin', {alert: false})
 })
 
+app.get('/areaPersonalAdmin/dashboard.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/dashboard.js')
+})
+
 app.get('/areaPersonalAdmin/registroVacunador', (req, res)=>{
     res.render('registrarVacunador', {alert:false})
 })
+
+app.get('/areaPersonalAdmin/cambiarnombrevacunatorio', (req, res) =>{
+    // console.log(__dirname)
+    res.sendFile(__dirname + '/public/admins/vacunatorios.html')
+    // response.writeHead(200, {'content-tyoe':'application/javascript'})
+})
+
+app.get('/areaPersonalAdmin/css/main.css', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/css/main.css')
+
+})
+
+app.get('/areaPersonalAdmin/js/cambiarNombreVacunatorio.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/js/cambiarNombreVacunatorio.js')
+
+})
+
+app.get('/areaPersonalAdmin/actualizarstock', (req, res) =>{
+    res.sendFile(__dirname + '/public/admins/stock.html')
+})
+
+app.get('/areaPersonalAdmin/js/actualizarStock.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/js/actualizarStock.js')
+
+}) 
 
 // 4 digitos - token
 // admin carga contraseña, y se le envia el mail del vacunador
