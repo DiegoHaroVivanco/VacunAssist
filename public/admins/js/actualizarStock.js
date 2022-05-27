@@ -1,3 +1,64 @@
+const url = `http://localhost:3000/infovacunatorios/`
+const vacunatorio1 = document.getElementById("vacunatorio1")
+const vacunatorio2 = document.getElementById("vacunatorio2")
+const vacunatorio3 = document.getElementById("vacunatorio3")
+
+const gripe1 = document.getElementById("gripe1")
+const fiebre1 = document.getElementById("fiebre1")
+const covid1M = document.getElementById("covid1M")
+const covid1P = document.getElementById("covid1P")
+
+const gripe2 = document.getElementById("gripe2") // los num 2 son la pos 0
+const fiebre2 = document.getElementById("fiebre2")
+const covid2M = document.getElementById("covid2M")
+const covid2P = document.getElementById("covid2P")
+
+const gripe3 = document.getElementById("gripe3") 
+const fiebre3 = document.getElementById("fiebre3")
+const covid3M = document.getElementById("covid3M")
+const covid3P = document.getElementById("covid3P")
+
+document.getElementById("btnmostrar").onclick = (e) =>{
+    if (e && "preventDefault" in e) e.preventDefault();
+
+    const listarDatos =  async () =>{
+        try {
+            const response  = await fetch(url,{
+                headers: { "Access-Control-Allow-Origin": `${url}` }
+            });
+            const dataParser = await response.json()
+            console.log(dataParser)
+            return dataParser
+    
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    listarDatos().then(data => {
+        //console.log(data)
+        vacunatorio1.innerHTML = data[0].nombre
+        vacunatorio2.innerHTML = data[1].nombre
+        vacunatorio3.innerHTML = data[2].nombre
+
+        gripe1.innerHTML = ('Stock Actual = ' + data[1].stock_gripe)
+        fiebre1.innerHTML = ('Stock Actual = ' + data[1].stock_fiebreA)
+        covid1M.innerHTML = ('Stock Actual = ' + data[1].stock_moderna)
+        covid1P.innerHTML = ('Stock Actual = ' + data[1].stock_phizer)
+
+        gripe2.innerHTML = ('Stock Actual = ' + data[0].stock_gripe)
+        fiebre2.innerHTML = ('Stock Actual = ' + data[0].stock_fiebreA)
+        covid2M.innerHTML = ('Stock Actual = ' + data[0].stock_moderna)
+        covid2P.innerHTML = ('Stock Actual = ' + data[0].stock_phizer)
+
+        gripe3.innerHTML = ('Stock Actual = ' + data[2].stock_gripe)
+        fiebre3.innerHTML = ('Stock Actual = ' + data[2].stock_fiebreA)
+        covid3M.innerHTML = ('Stock Actual = ' + data[2].stock_moderna)
+        covid3P.innerHTML = ('Stock Actual = ' + data[2].stock_phizer)
+        
+    }).then(mostrarVacunatorios2())
+}
+
 //Empieza js de Stock
 
 var stockNuevo;

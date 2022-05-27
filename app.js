@@ -116,10 +116,14 @@ app.get('/areaPersonalAdmin/registroVacunador', (req, res)=>{
     res.render('registrarVacunador', {alert:false})
 })
 
-app.get('/areaPersonalAdmin/cambiarnombrevacunatorio', (req, res) =>{
+app.get('/areaPersonalAdmin/cambiarnombrevacunatorio',(req, res) =>{
     // console.log(__dirname)
     res.sendFile(__dirname + '/public/admins/vacunatorios.html')
     // response.writeHead(200, {'content-tyoe':'application/javascript'})
+
+})
+
+app.get('/infoVacunatorios/', authController.infoVacunatorios,(req, res) =>{
 })
 
 app.get('/areaPersonalAdmin/css/main.css', (req, res)=>{
@@ -141,6 +145,11 @@ app.get('/areaPersonalAdmin/js/actualizarStock.js', (req, res)=>{
 
 }) 
 
+app.get('/areaPersonalAdmin/paven.png', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/paven.png')
+
+}) 
+
 // 4 digitos - token
 // admin carga contraseña, y se le envia el mail del vacunador
 // terminal de omnibus, municipalidad y cementerio municipal
@@ -151,6 +160,8 @@ app.get('/', (req, res)=>{
 })
 
 // ----- RUTAS PARA METODOS DEL CONTROLADOR ----
+// hacer un post con la ruta a usar, 
+//retornar la data en el autcontroller y hacer un fetch a la url del lado del cliente
 app.post('/registro', middleware.validacionUsuario, middleware.usuarioResult, authController.register)
 app.post('/login', authController.login)
 app.get('/logout', authController.logout)
@@ -167,6 +178,26 @@ app.post('/recuperar-passVacunador', controllerVacunador.recuperarContraseña)
 app.put('/recuperar-passVacunador', controllerVacunador.recuperarContraseña)
 app.get('/logoutVacunador', controllerVacunador.logout)
 
+
+app.post('/cambiarnombrevacunatorio1', authController.cambiarVacunatorio1)
+app.post('/cambiarnombrevacunatorio2', authController.cambiarVacunatorio2)
+app.post('/cambiarnombrevacunatorio3', authController.cambiarVacunatorio3)
+
+app.post('/stockgripe2', authController.actualizargripe2)
+app.post('/stockfiebre2', authController.actualizarfiebre2)
+app.post('/stockcovid2m', authController.actualizarstockcovid2m)
+app.post('/stockcovid2p', authController.actualizarstockcovid2p)
+
+app.post('/stockgripe1', authController.actualizargripe1)
+app.post('/stockfiebre1', authController.actualizarfiebre1)
+app.post('/stockcovid1m', authController.actualizarstockcovid1m)
+app.post('/stockcovid1p', authController.actualizarstockcovid1p)
+
+
+app.post('/stockgripe3', authController.actualizargripe3)
+app.post('/stockfiebre3', authController.actualizarfiebre3)
+app.post('/stockcovid3m', authController.actualizarstockcovid3m)
+app.post('/stockcovid3p', authController.actualizarstockcovid3p)
 
 
 app.listen(3000, ()=>{

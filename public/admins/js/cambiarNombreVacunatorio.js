@@ -1,3 +1,39 @@
+const url = `http://localhost:3000/infovacunatorios/`
+const vacunatorio1 = document.getElementById("vacunatorio1")
+const vacunatorio2 = document.getElementById("vacunatorio2")
+const vacunatorio3 = document.getElementById("vacunatorio3")
+
+
+document.getElementById("btnmostrar").onclick = (e) =>{
+    
+    if (e && "preventDefault" in e) e.preventDefault();
+
+    const listarDatos =  async () =>{
+        try {
+            const response  = await fetch(url,{
+                headers: { "Access-Control-Allow-Origin": `${url}` }
+            });
+            const dataParser = await response.json()
+            console.log(dataParser)
+            return dataParser
+    
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    listarDatos().then(data => {
+        //console.log(data)
+        vacunatorio1.innerHTML = data[0].nombre
+        vacunatorio2.innerHTML = data[1].nombre
+        vacunatorio3.innerHTML = data[2].nombre
+        
+    }).then(mostrarVacunatorios())
+}
+
+
+
+
 //Empieza js de vacunatorios
 var vac;
 var nomVac;
@@ -27,7 +63,7 @@ function capturarInputA() {
 
 function capturar1(){
     nomVac = document.getElementById('nomVac1').value;
-    localStorage.setItem("nom1",nomVac);
+    // localStorage.setItem("nom1",nomVac);
     cambiar(nomVac);
 }
 
@@ -37,7 +73,7 @@ function capturarInputB() {
 
 function capturar2(){
     nomVac = document.getElementById('nomVac2').value;
-    localStorage.setItem("nom2",nomVac);
+    // localStorage.setItem("nom2",nomVac);
     cambiar(nomVac);
 }
 
@@ -47,7 +83,7 @@ function capturarInputC() {
 
 function capturar3(){
     nomVac = document.getElementById('nomVac3').value;
-    localStorage.setItem("nom3",nomVac);
+    // localStorage.setItem("nom3",nomVac);
     cambiar(nomVac);
 }
 
@@ -60,40 +96,3 @@ function cambiar(nom){
     }
     else alert ('ya existe un vacunatorio con ese nombre');
 }
-
-
-
-// //Empieza JS de perfil vacunatorios
-
-// function mostrarFormZona(){
-//     document.getElementById('formZona').style.display = 'block';
-// }
-
-// function capturarZona(){
-//     let zona = document.getElementById('nuevaZona').value;
-//     cambiarZona(zona);
-// }
-
-// function cambiarZona(unaZona){
-//     let zona1 = 'Terminal Omnibus';
-//     let zona2 = 'Terminal Municipalidad';
-//     let zona3 = 'Terminal Cementerio';
-
-//     if(unaZona.toUpperCase() == zona1.toUpperCase() || unaZona.toUpperCase() == zona2.toUpperCase() || unaZona.toUpperCase() == zona3.toUpperCase()){
-//         alert('su zona fue actualizada con éxito')
-//     }
-//     else alert('la zona ingresada no pertenece a ningun vacunatorio');
-// }
-
-// function mostrarFormContra(){
-//     document.getElementById('formContra').style.display = 'block';
-// }
-
-// function capturarContra(){
-//     let pass = document.getElementById('nuevaContra').value;
-//     cambiarContra(pass);
-// }
-
-// function cambiarContra(){
-//     alert ('la contraseña fue actualizada con éxito');
-// }
