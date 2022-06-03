@@ -9,6 +9,14 @@ exports.validacionUsuarioVacunador = [
     .withMessage('Ingrese un email válido'),
     check('dni').exists().isNumeric().isLength({min: 7, max:8})
     .withMessage('Ingrese un DNI válido'),
+        check('fechaNacimiento').exists().toDate().custom((value, {req})=>{
+        if(Date.parse(value) > 1655856000000 || Date.parse(value) < 1086227674000){
+            throw new Error('Ingrese una fecha válida')
+        }
+
+        return true;
+    })
+
 ]
 
 

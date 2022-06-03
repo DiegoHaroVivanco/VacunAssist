@@ -245,6 +245,8 @@ exports.recuperarContraseña = async (req, res) =>{
 }
 
 
+
+
 // controlers del admin
 
 exports.loginAdmin = (req, res) =>{
@@ -356,6 +358,15 @@ exports.infoVacunatorios = (req, res) =>{
       //  console.log(results)
         res.json(results)
     })
+}
+
+exports.dataUsuarios = (req, res) =>{
+    conexion.query('SELECT * FROM Usuarios',(error, results) => {
+        if(error) throw error;
+         //console.log(results)
+        res.json(results)
+    
+    })    
 }
 
 

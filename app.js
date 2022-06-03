@@ -99,6 +99,10 @@ app.get('/areaPersonalVacunador/js/perfilvacunador.js', (req, res)=>{
 
 })
 
+app.get('/datosusuarios/', authController.dataUsuarios,(req, res)=>{
+
+})
+
 // RUTAS DE ADMIN
 
 app.get('/autenticacion', (req, res)=>{
@@ -199,6 +203,11 @@ app.post('/stockfiebre3', authController.actualizarfiebre3)
 app.post('/stockcovid3m', authController.actualizarstockcovid3m)
 app.post('/stockcovid3p', authController.actualizarstockcovid3p)
 
+app.post('/cambiarpasswordvacunador', controllerVacunador.cambiarContraseña)
+app.put('/cambiarpasswordvacunador', controllerVacunador.cambiarContraseña)
+
+
+app.post('/actualizarzona', controllerVacunador.actualizarZonaVacunador)
 
 app.listen(3000, ()=>{
     console.log('Server corriendo en http://localhost:3000')

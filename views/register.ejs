@@ -18,41 +18,58 @@
             </div>
             <form class="formm" action="/registro" method="post">
                 <div class="row">
+                    <h3 class="descriph3">Nombre</h3>
                     <i class="fa-solid fa-key"></i>
                     <input type="text" name="name" placeholder="Nombre" class="input1" required>
                     
                 </div>
                 <div class="row">
+                    <h3 class="descriph3">Apellido</h3>
                     <i class="fa-solid fa-key"></i>
                     <input type="text" name="ape" placeholder="Apellido" required>
                     
                 </div>
                 <div class="row">
+                    <h3 class="descriph3">DNI</h3>
                     <i class="fa-solid fa-key"></i>
                     <input type="text" name="dni" placeholder="DNI" required>
                     
                 </div>
                 <div class="row">
+                    <h3 class="descriph3">Fecha de Nacimiento</h3>
+
                     <i class="fa-solid fa-key"></i>
-                    <input type="date" name="fechaNacimiento" required>
+                    <input  type="date" name="fechaNacimiento" placeholder="Fecha de Nacimiento" required>
                     
                 </div>
                 <div class="row">
+                    <h3 class="descriph3">Seleccione la zona</h3>
+
                     <i class="fa-solid fa-key"></i>
-                    <input type="text" name="zona" placeholder="Zona" required>
+                    <!-- <input type="text" name="zona" placeholder="Zona" required> -->
+                    <div class="select">
+                        <select name="zona" required>
+                            <!-- Opciones de la lista -->
+                            <option value="1">Cementerio municipal</option>
+                            <option value="2" selected>Municipalidad</option> <!-- Opción por defecto -->
+                            <option value="3">Terminal de omnibus</option>
+                        </select>      
+                    </div>
                     
                 </div>
                 <div class="row">
+                    <h3 class="descriph3">Email</h3>
                     <i class="fas fa-user"></i>
                     <input type="email" name="email" placeholder="Email" autofocus required>
                     
                 </div>
                 <div class="row">
+                    <h3 class="descriph3">Contraseña</h3>
                     <i class="fas fa-lock"></i>
                     <input type="password" name="password" placeholder="Contraseña" required>
                     
                 </div>
-                <div class="row button">
+                <div class="row button btnregis">
                     <input type="submit" value="Registrar">                
                 </div>
 

@@ -183,3 +183,59 @@ exports.recuperarContraseña = async (req, res) =>{
     }
 
 }
+
+exports.actualizarZonaVacunador = (req, res) =>{
+    
+    const zonaNueva = req.body.zona
+
+    conexion.query("SELECT * FROM Usuarios",(error, results) => {
+        console.log(results[0].Zona)
+        if(results[0].Zona != 'Terminal de omnibus' && results[0].Zona != 'Municipaliad' && results[0].Zona != 'Cementerio municipal'){
+            res.redirect('/areaPersonalVacunador/editarperfil') 
+        }else{
+            conexion.query("UPDATE Usuarios SET Zona = '"+zonaNueva+"' WHERE dni=10583200",(error, results) => {
+                if(error) throw error;
+
+                res.redirect('/areaPersonalVacunador/editarperfil')            
+            })
+        }
+        
+        
+    })
+}
+
+exports.cambiarContraseña = async (req, res) =>{
+    const email = 'diegolautaro16@gmail.com'
+    const passTemporal = req.body.pass
+    let passHash = await bcryptjs.hash(passTemporal, 8)
+    const linkLogin = `http://localhost:3000/loginVacunador`
+
+    try {
+        //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
+        conexion.query('SELECT * FROM Usuarios WHERE WHERE dni=41567454',  async(error, results) => {
+
+                // actualizo la contraseña en la db para el email ingresado
+                conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE dni=41567454", async (error, results)=>{
+                    if(error) throw error;
+                    res.redirect('/areaPersonalVacunador/editarperfil') 
+              
+                    await transporter.sendMail({ // envío email al campo que ingreso el usuario
+                        from: '"Recuperación de contraseña"',
+                        to: email,
+                        subject: "Recuperacion de contraseña",
+                        html: `
+                            <b>Tu nueva contraseña es: </b>
+                            <p> ${passTemporal}</p>
+                            <b>Inicia sesión ingresando a: </b>
+                            <a href="${linkLogin}">${linkLogin}</a>
+                        `
+                    })
+                })
+            
+
+        })        
+    } catch (error) {
+        console.log(error)
+    }
+
+}

@@ -13,18 +13,19 @@
     <header>
         <h1>Bienvenido</h1>
     </header>
-    <button type="button" onclick = "mostrarFormZona();">Cambiar Zona</button> 
-    <form id="formZona" action="">
+    <button id="btnmostrar" type="button">Cambiar Zona</button>
+    <form id="formZona" action="/actualizarzona" method="post">
+        <h3 id="zonaAct"></h3>
         <label for="zona">Ingrese una zona:</label>
         <input type="text" name="zona" id="nuevaZona">
-        <button type="button" onclick="capturarZona();">Guardar</button>
+        <button type="submit" onclick="capturarZona();">Guardar</button>
     </form>
 
     <button type="button" onclick = "mostrarFormContra();">Cambiar Contraseña</button> 
-    <form id="formContra" action="">
+    <form id="formContra" action="/cambiarpasswordvacunador" method="post">
         <label for="zona">Ingrese su nueva Contraseña:</label>
-        <input type="password" name="zona" id="nuevaContra">
-        <button type="button" onclick="capturarContra();">Guardar</button>
+        <input type="password" name="pass" id="nuevaContra">
+        <button type="submit" onclick="capturarContra();">Guardar</button>
     </form>
     <script src="./js/perfilvacunador.js"></script>
 
