@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
             })
 
         } else {
-            conexion.query('SELECT * FROM Usuarios WHERE email = ?', [user], async (error, results) => {
+            conexion.query('SELECT * FROM vacunadores WHERE email = ?', [user], async (error, results) => {
                 if (results.length == 0 || !(await bcryptjs.compare(pass, results[0].Pass))) {
 
                     res.render('loginVacunador', {
@@ -106,7 +106,7 @@ exports.isAuthenticated = async (req, res, next) => {
     if (req.cookies.jwt) {
         try {
             const decodificada = await promisify(jwt.verify)(req.cookies.jwt, 'super_secret')
-            conexion.query('SELECT * FROM Usuarios WHERE dni = ?', [decodificada.dni], (error, results) => {
+            conexion.query('SELECT * FROM vacunadores WHERE dni = ?', [decodificada.dni], (error, results) => {
                 if (!results) { return next() }
                 req.user = results[0]
                 return next(); // pasa a ejecutar el siguiente middleware
@@ -134,7 +134,7 @@ exports.recuperarContraseña = async (req, res) =>{
 
     try {
         //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
-        conexion.query('SELECT * FROM Usuarios WHERE email = ?', [email],  async(error, results) => {
+        conexion.query('SELECT * FROM vacunadores WHERE email = ?', [email],  async(error, results) => {
             console.log(results.length == 0 ) // para controlar si el mail existe o no
             if(results.length == 0 || results[0].Email !== email){
                 res.render('recuperarPassVacunador', {
@@ -148,7 +148,7 @@ exports.recuperarContraseña = async (req, res) =>{
                 })
             }else{
                 // actualizo la contraseña en la db para el email ingresado
-                conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE Email='"+email+"'", async (error, results)=>{
+                conexion.query("UPDATE vacunadores SET Pass = '"+passHash+"' WHERE Email='"+email+"'", async (error, results)=>{
                     if(error) throw error;
                     console.log(results[0])
                     res.render('recuperarPassVacunador', {
@@ -188,7 +188,7 @@ exports.actualizarZonaVacunador = (req, res) =>{
     
     const zonaNueva = req.body.zona
 
-    conexion.query("SELECT * FROM Usuarios",(error, results) => {
+    conexion.query("SELECT * FROM vacunadores",(error, results) => {
         console.log(results[0].Zona)
         if(results[0].Zona != 'Terminal de omnibus' && results[0].Zona != 'Municipaliad' && results[0].Zona != 'Cementerio municipal'){
             res.redirect('/areaPersonalVacunador/editarperfil') 
@@ -212,10 +212,10 @@ exports.cambiarContraseña = async (req, res) =>{
 
     try {
         //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
-        conexion.query('SELECT * FROM Usuarios WHERE WHERE dni=41567454',  async(error, results) => {
+        conexion.query('SELECT * FROM vacunadores WHERE WHERE dni=41567454',  async(error, results) => {
 
                 // actualizo la contraseña en la db para el email ingresado
-                conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE dni=41567454", async (error, results)=>{
+                conexion.query("UPDATE vacunadores SET Pass = '"+passHash+"' WHERE dni=41567454", async (error, results)=>{
                     if(error) throw error;
                     res.redirect('/areaPersonalVacunador/editarperfil') 
               

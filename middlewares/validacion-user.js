@@ -13,7 +13,7 @@ exports.validacionUsuario = [
     check('password').trim().not().isEmpty().isLength({min:2, max:8})
     .withMessage('La contraseña debe tener entre 2 y 8 digitios'),
     check('fechaNacimiento').exists().toDate().custom((value, {req})=>{
-        if(Date.parse(value) > 1655856000000){
+        if(Date.parse(value) > 1655175927016){
             throw new Error('Ingrese una fecha válida')
         }
         return true;
@@ -29,7 +29,7 @@ exports.usuarioResult = (req, res, next) =>{
 
     // const error = result[0].msg
     // res.json({success: false, message: error})
-    
+
     // Si es que hay un error, se lo informa con una alerta
     res.render('register', {
         alert: true,

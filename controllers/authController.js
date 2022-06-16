@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
                     alerTitle: "Registro exitoso",
                     alertMessage: "Se envió un token al email ingresado",
                     alertIcon: 'success',
-                    showConfirmButton: false,
+                    showConfirmButton: true,
                     timer: 3000,
                     ruta: 'login' // despues tiene que ir a la ruta para cargar vacunas
                 })
@@ -141,7 +141,7 @@ exports.autenticar = (req, res) => {
                 alerTitle: "Token correcto",
                 alertMessage: "Inicio de sesion correcto",
                 alertIcon: 'success',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: 2500,
                 ruta: 'areaPersonal'
             })
@@ -151,8 +151,8 @@ exports.autenticar = (req, res) => {
                 alerTitle: "Error",
                 alertMessage: "Token de seguridad icorrecto",
                 alertIcon: 'error',
-                showConfirmButton: false,
-                timer: false,
+                showConfirmButton: true,
+                timer: 2500,
                 ruta: 'login'
             })
         }
@@ -293,10 +293,34 @@ exports.registerVacunador = async (req, res) => {
         let passHash = await bcryptjs.hash(pass, 8)
         const linkLogin = `http://localhost:3000/loginVacunador`
 
-        conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
-            if(results.length == 0){ // no hay usuarios registrados con el email ingresado
-                
-                conexion.query('INSERT INTO Usuarios SET ?', {
+        conexion.query("SELECT * FROM vacunadores WHERE Email = '"+email+"' OR dni = '"+dni+"' " , (error, results) => { //selecciono a los usuarios con el email ingresado
+            
+            if(results.length != 0) {
+                console.log(results[0].Email)
+                console.log(results[0].dni)
+                if(results[0].Email == email){
+                    res.render('registrarVacunador', {
+                        alert: true,
+                        alerTitle: "Error",
+                        alertMessage: "El email ingresado ya se encuentra registrado",
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'areaPersonalAdmin/registroVacunador'
+                    })
+                }else if(results[0].dni == dni){
+                    res.render('registrarVacunador', {
+                        alert: true,
+                        alerTitle: "Error",
+                        alertMessage: "El dni ingresado ya se encuentra registrado",
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'areaPersonalAdmin/registroVacunador'
+                    })
+                }
+            }else{
+                conexion.query('INSERT INTO vacunadores SET ?', {
                     dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: token
                     }, async (error, results) => {
                         if (error) {
@@ -307,8 +331,8 @@ exports.registerVacunador = async (req, res) => {
                             alerTitle: "Registro exitoso",
                             alertMessage: "Se envió la contraseña y un token al email ingresado",
                             alertIcon: 'success',
-                            showConfirmButton: false,
-                            timer: 3000,
+                            showConfirmButton: true,
+                            timer: false,
                             ruta: 'areaPersonalAdmin'
                             })
                             
@@ -329,21 +353,9 @@ exports.registerVacunador = async (req, res) => {
                         }
         
                     })
-            }else{
-                res.render('registrarVacunador', {
-                    alert: true,
-                    alerTitle: "Error",
-                    alertMessage: "El email imgresado ya se encuentra registrado",
-                    alertIcon: 'error',
-                    showConfirmButton: true,
-                    timer: false,
-                    ruta: 'areaPersonalAdmin/registroVacunador'
-                })
-            }
-            
-        })
+            }    
 
-        
+        })
           
     } catch (error) {
         console.log(error)
