@@ -1,5 +1,6 @@
 const mysql = require('mysql')
 require('dotenv').config()
+const conf = require('./config')
 
 // const conexion = mysql.createConnection({
 //     host: 'localhost',
@@ -9,10 +10,10 @@ require('dotenv').config()
 // })
 
 const conexion = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
+    host: conf.production.host,
+    user: conf.production.username,
+    password: conf.production.password,
+    database: conf.production.database
 })
 
 
