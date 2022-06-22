@@ -3,17 +3,10 @@ require('dotenv').config()
 const conf = require('./config')
 
 const conexion = mysql.createConnection({
-<<<<<<< Updated upstream
    host: 'localhost',
    user: 'root',
    password: '123456789',
    database: 'vacunassist'
-=======
-    host: 'localhost',
-   user: 'root',
-   password: 'lautaro08',
-   database: 'Vacunassist'
->>>>>>> Stashed changes
 })
 
 //const conexion = mysql.createConnection({
