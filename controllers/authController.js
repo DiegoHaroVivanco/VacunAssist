@@ -355,26 +355,38 @@ exports.cambiarEstadoRiesgo = (req, res) =>{
 
 exports.loginAdmin = (req, res) =>{
     const token = req.body.token
+    const pass = req.body.password
     console.log(token)
-    conexion.query('SELECT * FROM admins WHERE token = ?', [token] ,(error, results) => {
-        console.log(results[0].token)
-        if(token === results[0].token){
+    conexion.query("SELECT * FROM admins WHERE token = '"+token+"' AND pass = '"+pass+"' " ,(error, results) => {
+        console.log("Data: " +results[0].ape)
+        if(token === results[0].token && pass === results[0].pass){
+            const id = results[0].ape
+            const jToken = jwt.sign({ id: id }, 'super_secret')
+            console.log("Token: " + jToken + " Para el usuario: " + id)
+            console.log("token creado: " + results[0].token)
+
+             const cookiesOptions = {
+                expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+                httpOnly: true
+            }
+            res.cookie('jwt', jToken, cookiesOptions)
+
             res.render('inicioAdmin', {
                 alert: true,
-                alerTitle: "",
-                alertMessage: "Token valido",
+                alerTitle: "Token y contraseña correctos",
+                alertMessage: "Inicio de sesion correcto",
                 alertIcon: 'success',
-                showConfirmButton: false,
-                timer: 1000,
+                showConfirmButton: true,
+                timer: false,
                 ruta: 'areaPersonalAdmin' 
             }) 
         }else{
             res.render('inicioAdmin', {
                 alert: true,
-                alerTitle: "",
+                alerTitle: "Error",
                 alertMessage: "Token inválido",
                 alertIcon: 'error',
-                showConfirmButton: false,
+                showConfirmButton: true,
                 timer: false,
                 ruta: 'autenticacion' 
             }) 
@@ -382,6 +394,31 @@ exports.loginAdmin = (req, res) =>{
         
     })
 }
+
+exports.isAuthenticatedAdministrador = async (req, res, next) => {
+    if (req.cookies.jwt) {
+        try {
+            const decodificada = await promisify(jwt.verify)(req.cookies.jwt, 'super_secret')
+            conexion.query('SELECT * FROM admins WHERE ape = ?', [decodificada.id], (error, results) => {
+                if (!results) { return next() }
+                req.user = results[0]
+                return next(); // pasa a ejecutar el siguiente middleware
+            })
+
+        } catch (error) {
+            console.log(error)
+            return next()
+        }
+    } else {
+        res.redirect('/autenticacion')
+    }
+}
+
+exports.logoutAdministrador = (req, res) => {
+    res.clearCookie('jwt')
+    return res.redirect('/autenticacion')
+}
+
 
 exports.registerVacunador = async (req, res) => {
     try {

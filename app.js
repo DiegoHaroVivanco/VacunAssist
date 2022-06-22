@@ -127,7 +127,7 @@ app.get('/datosusuarioVacunador/', controllerVacunador.dataUsuarioVacunador,(req
 app.get('/autenticacion', (req, res)=>{
     res.render('inicioAdmin', {alert:false})
 })
-app.get('/areaPersonalAdmin', (req, res)=>{
+app.get('/areaPersonalAdmin', authController.isAuthenticatedAdministrador, (req, res)=>{
     res.render('dash-admin', {alert: false})
 })
 
@@ -189,8 +189,12 @@ app.post('/registro', middleware.validacionUsuario, middleware.usuarioResult, au
 app.post('/login', authController.login)
 app.get('/logout', authController.logout)
 app.post('/autenticar', authController.autenticar)
+
+// admin 
 app.post('/autenticacion', authController.loginAdmin)
 app.post('/registroVacunador', middlewareVacunador.validacionUsuarioVacunador, middlewareVacunador.usuarioResult,authController.registerVacunador)
+app.get('/logoutAdministrador', authController.logoutAdministrador)
+//
 
 app.post('/recuperar-pass', authController.recuperarContraseña)
 app.put('/recuperar-pass', authController.recuperarContraseña) 
