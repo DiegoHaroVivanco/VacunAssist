@@ -1,3 +1,29 @@
+<<<<<<< Updated upstream
+=======
+/* body{
+    background-image: url('../admins/paven.png');
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap');
+
+*{
+    font-family: 'Oswald', sans-serif;
+}
+
+.body{
+    height: 190vh;
+    background: linear-gradient(#80d83d, rgb(68, 128, 68));
+}
+
+.divBodyStock{
+    margin: 20px;
+    padding: 20px;
+}
+
+h1, h2{
+    color: white;
+}
+>>>>>>> Stashed changes
 
 #vacunatorios{
     display: none;
@@ -24,7 +50,15 @@
 
 #divM, #divP, #divM2, #divP2, #divP3, #divM3{
     display: none;
-    margin-top: 60px;
+}
+
+.covidVacunas{
+    display: flex;
+    justify-items: center;
+}
+
+#divM, #divM2, #divM3{
+    margin-right: 40px;
 }
 
 #gripe2, #fiebre2, #covid2{
