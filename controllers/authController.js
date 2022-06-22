@@ -558,7 +558,7 @@ exports.actualizarfiebre1 = (req, res) =>{
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_fiebreA : true) ){
             stockNuevo += results[0].stock_fiebreA
             conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
                 if(error) throw error;
@@ -580,7 +580,7 @@ exports.actualizarstockcovid1m = (req, res) =>{
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_moderna : true) ){
             stockNuevo += results[0].stock_moderna
             conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
                 if(error) throw error;
@@ -599,7 +599,7 @@ exports.actualizarstockcovid1p = (req, res) =>{
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_phizer : true) ){
             stockNuevo += results[0].stock_phizer
             conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
                 if(error) throw error;
@@ -641,7 +641,7 @@ exports.actualizarfiebre2 = (req, res) =>{
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_fiebreA : true) ){
             stockNuevo += results[0].stock_fiebreA
             conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
@@ -661,9 +661,9 @@ exports.actualizarstockcovid2m = (req, res) =>{
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].valorcovid2m : true) ){
-            stockNuevo += results[0].valorcovid2m
-            conexion.query("UPDATE vacunatorios SET valorcovid2m = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_moderna : true) ){
+            stockNuevo += results[0].stock_moderna
+            conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
@@ -680,9 +680,9 @@ exports.actualizarstockcovid2p = (req, res) =>{
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].valorcovid2p : true) ){
-            stockNuevo += results[0].valorcovid2p
-            conexion.query("UPDATE vacunatorios SET valorcovid2p = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_phizer : true) ){
+            stockNuevo += results[0].stock_phizer
+            conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
@@ -718,11 +718,11 @@ exports.actualizargripe3 = (req, res) =>{
 
 exports.actualizarfiebre3 = (req, res) =>{
 
-    let stockNuevo = parseInt(req.body.valorgripe1)
+    let stockNuevo = parseInt(req.body.valorfiebre3)
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_fiebreA : true) ){
             stockNuevo += results[0].stock_fiebreA
             conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
@@ -738,11 +738,11 @@ exports.actualizarfiebre3 = (req, res) =>{
 
 exports.actualizarstockcovid3m = (req, res) =>{
 
-    let stockNuevo = parseInt(req.body.valorgripe1)
+    let stockNuevo = parseInt(req.body.valorcovid3m)
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_moderna : true) ){
             stockNuevo += results[0].stock_moderna
             conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
@@ -757,11 +757,11 @@ exports.actualizarstockcovid3m = (req, res) =>{
 
 exports.actualizarstockcovid3p = (req, res) =>{
 
-    let stockNuevo = parseInt(req.body.valorgripe1)
+    let stockNuevo = parseInt(req.body.valorcovid3p)
     // recuperar stock de la db
     conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
 
-        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_phizer : true) ){
             stockNuevo += results[0].stock_phizer
             conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
