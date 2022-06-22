@@ -531,63 +531,85 @@ exports.cambiarVacunatorio3 = (req, res) =>{
 
 
 exports.actualizargripe1 = (req, res) =>{
-    const stockNuevo = req.body.valorgripe1
-
-        if(stockNuevo < 0){
-            res.redirect('/areaPersonalAdmin/actualizarstock')
-        }else{
+    let stockNuevo = parseInt(req.body.valorgripe1)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
+        // console.log( typeof (stockNuevo))
+        
+        // REPLICAR A LOS A LOS DEMAS ACTUALIZAR DE VACUNAS
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_gripe
             conexion.query("UPDATE vacunatorios SET stock_gripe = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
-                    if(error) throw error;
+                if(error) throw error;
 
-                    res.redirect('/areaPersonalAdmin/actualizarstock')
+                res.redirect('/areaPersonalAdmin/actualizarstock')
             })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
         }
+
+
+    })    
 }
 
 
 exports.actualizarfiebre1 = (req, res) =>{
-    const stockNuevo = req.body.valorfiebre1
+    let stockNuevo = parseInt(req.body.valorfiebre1)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_fiebreA
+            conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+
+    })
+    
 }
 
 
 exports.actualizarstockcovid1m = (req, res) =>{
 
-    const stockNuevo = req.body.valorcovid1m
+    let stockNuevo = parseInt(req.body.valorcovid1m)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_moderna
+            conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 exports.actualizarstockcovid1p = (req, res) =>{
 
-    const stockNuevo = req.body.valorcovid1p
+    let stockNuevo = parseInt(req.body.valorcovid1p)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Cementerio municipal' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_phizer
+            conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Cementerio municipal'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 } 
 
 
@@ -595,64 +617,80 @@ exports.actualizarstockcovid1p = (req, res) =>{
 
 exports.actualizargripe2 = (req, res) =>{
 
-    const stockNuevo = req.body.valorgripe2
+    let stockNuevo = parseInt(req.body.valorgripe2)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_gripe = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_gripe
+            conexion.query("UPDATE vacunatorios SET stock_gripe = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 
 exports.actualizarfiebre2 = (req, res) =>{
 
-    const stockNuevo = req.body.valorfiebre2
+    let stockNuevo = parseInt(req.body.valorfiebre2)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_fiebreA
+            conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
-
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 
 exports.actualizarstockcovid2m = (req, res) =>{
 
-    const stockNuevo = req.body.valorcovid2m
+    let stockNuevo = parseInt(req.body.valorcovid2m)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].valorcovid2m : true) ){
+            stockNuevo += results[0].valorcovid2m
+            conexion.query("UPDATE vacunatorios SET valorcovid2m = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 exports.actualizarstockcovid2p = (req, res) =>{
-    const stockNuevo = req.body.valorcovid2p
+    
+    let stockNuevo = parseInt(req.body.valorcovid2p)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Municipalidad' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].valorcovid2p : true) ){
+            stockNuevo += results[0].valorcovid2p
+            conexion.query("UPDATE vacunatorios SET valorcovid2p = '"+stockNuevo+"' WHERE zona='Municipalidad'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 } 
 
 
@@ -660,61 +698,78 @@ exports.actualizarstockcovid2p = (req, res) =>{
 
 exports.actualizargripe3 = (req, res) =>{
 
-    const stockNuevo = req.body.valorgripe3
+    let stockNuevo = parseInt(req.body.valorgripe3)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_gripe = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_gripe
+            conexion.query("UPDATE vacunatorios SET stock_gripe = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 
 exports.actualizarfiebre3 = (req, res) =>{
-    const stockNuevo = req.body.valorfiebre3
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
+    let stockNuevo = parseInt(req.body.valorgripe1)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
+
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_fiebreA
+            conexion.query("UPDATE vacunatorios SET stock_fiebreA = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 
 exports.actualizarstockcovid3m = (req, res) =>{
-    const stockNuevo = req.body.valorcovid3m
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
+    let stockNuevo = parseInt(req.body.valorgripe1)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
+
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_moderna
+            conexion.query("UPDATE vacunatorios SET stock_moderna = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 }
 
 exports.actualizarstockcovid3p = (req, res) =>{
 
-    const stockNuevo = req.body.valorcovid3p
+    let stockNuevo = parseInt(req.body.valorgripe1)
+    // recuperar stock de la db
+    conexion.query("SELECT * FROM vacunatorios WHERE zona='Terminal de omnibus' ",(error, results) => {
 
-    if(stockNuevo < 0){
-        res.redirect('/areaPersonalAdmin/actualizarstock')
-    }else{
-        conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
+        if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1) <= results[0].stock_gripe : true) ){
+            stockNuevo += results[0].stock_phizer
+            conexion.query("UPDATE vacunatorios SET stock_phizer = '"+stockNuevo+"' WHERE zona='Terminal de omnibus'" ,(error, results) => {
                 if(error) throw error;
 
                 res.redirect('/areaPersonalAdmin/actualizarstock')
-        })
-    }
-
+            })
+        }else{
+            res.redirect('/areaPersonalAdmin/actualizarstock')
+        }
+    })
 } 

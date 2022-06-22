@@ -40,7 +40,7 @@ document.getElementById("btnmostrar").onclick = (e) =>{
         vacunatorio1.innerHTML = data[0].nombre
         vacunatorio2.innerHTML = data[1].nombre
         vacunatorio3.innerHTML = data[2].nombre
-
+    // let stock = document.getElementById('gripe1').textContent.substring(15) falta parsearlo a int
         gripe1.innerHTML = ('Stock Actual = ' + data[1].stock_gripe)
         fiebre1.innerHTML = ('Stock Actual = ' + data[1].stock_fiebreA)
         covid1M.innerHTML = ('Stock Actual = ' + data[1].stock_moderna)
@@ -105,22 +105,22 @@ function capturarActual3P(){
 
 function capturarA(){
     stockNuevo = document.getElementById('nuevoStock1').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(gripe1.textContent.substring(15)), stockNuevo);
 }
 
 function capturarB(){
     stockNuevo = document.getElementById('nuevoStock2').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(fiebre1.textContent.substring(15)), stockNuevo);
 }
 
 function capturarCM(){
     stockNuevo = document.getElementById('nuevoStock3M').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(covid1M.textContent.substring(15)), stockNuevo);
 }
 
 function capturarCP(){
     stockNuevo = document.getElementById('nuevoStock3P').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(covid1P.textContent.substring(15)), stockNuevo);
 }
 
 //Funciones stock vacunatorio 2
@@ -160,22 +160,22 @@ function capturarActual6P() {
 
 function capturarD(){
     stockNuevo = document.getElementById('nuevoStock4').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(gripe2.textContent.substring(15)), stockNuevo);
 }
 
 function capturarE(){
     stockNuevo = document.getElementById('nuevoStock5').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(fiebre2.textContent.substring(15)), stockNuevo);
 }
 
 function capturarFM(){
     stockNuevo = document.getElementById('nuevoStock6M').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(covid2M.textContent.substring(15)), stockNuevo);
 }
 
 function capturarFP(){
     stockNuevo = document.getElementById('nuevoStock6P').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(covid2P.textContent.substring(15)), stockNuevo);
 }
 
 //Funciones stock vacunatorio 3
@@ -217,30 +217,37 @@ function capturarActual9P() {
 
 function capturarG(){
     stockNuevo = document.getElementById('nuevoStock7').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(gripe3.textContent.substring(15)), stockNuevo);
 }
 
 function capturarH(){
     stockNuevo = document.getElementById('nuevoStock8').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(fiebre3.textContent.substring(15)), stockNuevo);
 }
 
 function capturarIM(){
     stockNuevo = document.getElementById('nuevoStock9M').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(covid3M.textContent.substring(15)), stockNuevo);
 }
 
 function capturarIP(){
     stockNuevo = document.getElementById('nuevoStock9P').value;
-    cambiarStock(stockNuevo);
+    cambiarStock(parseInt(covid3P.textContent.substring(15)), stockNuevo);
 }
 
 //Fin funciones de vacunatorio 3
 
-function cambiarStock(stock){
-    if(stock >= 0){
-        stockAct.innerText = ('Stock Actual = ' + stock);
+function cambiarStock(stockAct, stockNuevo){
+    // if(stock !== 0){
+    //     stockAct.innerText = ('Stock Actual = ' + stock);
+    //     alert('El stock se actualizó con éxito');
+    // }
+    // else alert('Ingrese un valor válido');
+    if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1)  <= stockAct : true) ){
         alert('El stock se actualizó con éxito');
+    }else{
+        alert('Ingrese un valor válido');
     }
-    else alert('Ingrese un valor válido');
 }
+
+// let stock = document.getElementById('gripe1').textContent.substring(15) falta parsearlo a int

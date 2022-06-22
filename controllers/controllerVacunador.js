@@ -106,28 +106,6 @@ exports.autenticar = (req, res) => {
             
         })    
         
-        // if (token === userToken.tokenHash) {
-        //     res.render('autenticarVacunador', {
-        //         alert: true,
-        //         alerTitle: "Token correcto",
-        //         alertMessage: "Inicio de sesion correcto",
-        //         alertIcon: 'success',
-        //         showConfirmButton: true,
-        //         timer: 2500,
-        //         ruta: 'areaPersonalVacunador'
-        //     })
-        // } else {
-        //     res.render('autenticarVacunador', {
-        //         alert: true,
-        //         alerTitle: "Error",
-        //         alertMessage: "Token de seguridad incorrecto",
-        //         alertIcon: 'error',
-        //         showConfirmButton: true,
-        //         timer: 2500,
-        //         ruta: 'autenticarVacunador'
-        //     })
-        // }
-
     } catch (error) {
         console.log(error)
     }
