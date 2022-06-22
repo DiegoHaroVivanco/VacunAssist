@@ -13,9 +13,11 @@
     <header>
         <h1>Bienvenido</h1>
     </header>
+    <h3 id="zonaAct"></h3>
+
     <button id="btnmostrar" type="button">Cambiar Zona</button>
+
     <form id="formZona" method="post" action="/actualizarzonapaciente">
-        <h3 id="zonaAct"></h3>
         <h3>Seleccione la nueva zona</h3>
         <div class="select">
             <select id="nuevaZona" name="zona" required>
@@ -31,20 +33,24 @@
         <button type="submit" onclick="capturarZona();">Guardar</button>
     </form>
 
-    <form id="formRiesgo" action="/cambiarestadoriesgo" method="post">
-        <p>
-            Cambiar estado de riesgo<br>
 
-            <h3>¿Es persona de riesgo?</h3>
+    <h3 id="estadoActual">¿Es persona de riesgo?  </h3>
+
+    <h3>¿Quiere cambiar el estado de riesgo?</h3>
+    <button id="btnmostrarEstado" type="button">Cambiar estado de riesgo</button>
+
+    <form id="formRiesgo" action="/cambiarestadoriesgo" method="post">
+        <div>
+            <h4>¿Es persona de riesgo?</h4>
             <label><input class="check radio1" value="1" type="radio" name="estado" > Si</label><br>
             <br>
             <label><input class="check radio2" value="0" type="radio" name="estado" > No</label><br>
-  
-        </p>
+        </div>            
+        
         <p><button type="submit" onclick="capturarEstado()">Guardar</button> </p>
-      </form>
+    </form>
 
-
+    <h3>¿Quiere cambiar su contraseña?</h3>
     <button type="button" onclick = "mostrarFormContra();">Cambiar Contraseña</button> 
     <form id="formContra" action="/cambiarpasswordpaciente" method="post">
         <label for="zona">Ingrese su nueva Contraseña:</label>

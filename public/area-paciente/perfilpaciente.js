@@ -15,34 +15,64 @@ const listarDatos =  async () =>{
         console.log(error)
     }
 }
+
+listarDatos().then(data => {
+    //console.log(data)
+    zonaAct.innerHTML = ('Zona actual: ' + data[0].Zona)
+
+    if(data[0].riesgo == 1){ // true
+        document.getElementById("estadoActual").innerHTML = ('¿Es persona de riesgo? Si' )
+    }else{ // false
+        document.getElementById("estadoActual").innerHTML = ('¿Es persona de riesgo? No' )       
+    }
+
+})
+
 document.getElementById("btnmostrar").onclick = (e) =>{
     if (e && "preventDefault" in e) e.preventDefault();
 
-
-
     listarDatos().then(data => {
         //console.log(data)
-        zonaAct.innerHTML = ('Zona actual: ' + data[0].Zona)
-
         primZona = data[0].Zona
     }).then(mostrarFormZona())   
 
 }
 
-listarDatos().then(data => { // si es 1, es de riesgo y pongo el check en true sino pongo el check 2 en true
-    console.log("Estado riesgo json: " + data[0].riesgo)
-    if(data[0].riesgo === 1){
-        document.querySelector('.radio1').checked = true
-    }else{
-        document.querySelector('.radio2').checked = true
-    }
-})
+document.getElementById("btnmostrarEstado").onclick = (e) =>{
+
+    if (e && "preventDefault" in e) e.preventDefault();
+
+    listarDatos().then(data => {
+        console.log("Estado riesgo json: " + data[0].riesgo)
+        if(data[0].riesgo === 1){
+            document.querySelector('.radio1').checked = true // checbox si
+        }else{
+            document.querySelector('.radio2').checked = true // checbox no
+        }        
+    }).then(mostrarFormRiesgo())
+
+}
+
+
+// listarDatos().then(data => { // si es 1, es de riesgo y pongo el check en true sino pongo el check 2 en true
+//     console.log("Estado riesgo json: " + data[0].riesgo)
+//     if(data[0].riesgo === 1){
+//         document.querySelector('.radio1').checked = true
+//     }else{
+//         document.querySelector('.radio2').checked = true
+//     }
+// })
 
 //Empieza JS de perfil vacunatorios
 var zona
 
 function mostrarFormZona(){
     document.getElementById('formZona').style.display = 'block';
+}
+
+
+function mostrarFormRiesgo(){
+    document.getElementById('formRiesgo').style.display = 'block';
 }
 
 function capturarZona(){
