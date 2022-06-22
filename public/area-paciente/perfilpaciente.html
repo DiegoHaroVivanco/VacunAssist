@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="shortcut icon" href="../img/icon-vacun.png" type="image/x-icon">
+
+    <title>Editar Perfil</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido</h1>
+    </header>
+    <button id="btnmostrar" type="button">Cambiar Zona</button>
+    <form id="formZona" method="post" action="/actualizarzonapaciente">
+        <h3 id="zonaAct"></h3>
+        <h3>Seleccione la nueva zona</h3>
+        <div class="select">
+            <select id="nuevaZona" name="zona" required>
+                <!-- Opciones de la lista -->
+                <option class="value1" >Cementerio municipal</option>
+                <option class="value2"  selected>Municipalidad</option> <!-- Opción por defecto -->
+                <option class="value3" >Terminal de omnibus</option>
+            </select>      
+        </div>
+
+        <!-- <input type="text" name="zona" id="nuevaZona"> -->
+
+        <button type="submit" onclick="capturarZona();">Guardar</button>
+    </form>
+
+    <form id="formRiesgo" action="/cambiarestadoriesgo" method="post">
+        <p>
+            Cambiar estado de riesgo<br>
+
+            <h3>¿Es persona de riesgo?</h3>
+            <label><input class="check radio1" value="1" type="radio" name="estado" > Si</label><br>
+            <br>
+            <label><input class="check radio2" value="0" type="radio" name="estado" > No</label><br>
+  
+        </p>
+        <p><button type="submit" onclick="capturarEstado()">Guardar</button> </p>
+      </form>
+
+
+    <button type="button" onclick = "mostrarFormContra();">Cambiar Contraseña</button> 
+    <form id="formContra" action="/cambiarpasswordpaciente" method="post">
+        <label for="zona">Ingrese su nueva Contraseña:</label>
+        <input type="password" name="pass" id="nuevaContra" required>
+        <button type="submit" onclick="capturarContra();">Guardar</button>
+    </form>
+    <script src="./js/perfilpaciente.js"></script>
+
+</body>
+</html>

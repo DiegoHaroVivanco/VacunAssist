@@ -1,4 +1,4 @@
-const url = `http://localhost:3000/datosusuarios/`
+const url = `http://localhost:3000/datosusuarioVacunador/`
 const zonaAct = document.getElementById("zonaAct")
 let primZona
 document.getElementById("btnmostrar").onclick = (e) =>{
@@ -27,13 +27,14 @@ document.getElementById("btnmostrar").onclick = (e) =>{
 }
 
 //Empieza JS de perfil vacunatorios
+var zona
 
 function mostrarFormZona(){
     document.getElementById('formZona').style.display = 'block';
 }
 
 function capturarZona(){
-    let zona = document.getElementById('nuevaZona').value;
+    zona = document.querySelector('#nuevaZona').value;
     cambiarZona(zona);
 }
 
@@ -41,11 +42,12 @@ function cambiarZona(unaZona){
     let zona1 = 'Terminal de omnibus';
     let zona2 = 'Municipalidad';
     let zona3 = 'Cementerio municipal';
-    console.log("zona:"+primZona)
+    console.log("zonacambiar:"+unaZona)
     if(primZona.toUpperCase() == unaZona.toUpperCase()){
         alert('La zona ingresada es igual a la que poseía')
     
     }else if(unaZona.toUpperCase() == zona1.toUpperCase() || unaZona.toUpperCase() == zona2.toUpperCase() || unaZona.toUpperCase() == zona3.toUpperCase()){
+        zonaAct.innerText = "Zona actual: " + unaZona
         alert('su zona fue actualizada con éxito')
     }
     else alert('la zona ingresada no pertenece a ningun vacunatorio');
@@ -60,8 +62,11 @@ function capturarContra(){
     cambiarContra(pass);
 }
 
-function cambiarContra(){
-    alert ('la contraseña fue actualizada con éxito');
+function cambiarContra(pass){
+    if(pass && pass.length >= 2 && pass.length <= 8){
+        alert ('la contraseña fue actualizada con éxito');
+    }else{
+        alert('Ingrese una contraseña que tenga entre 2 y 8 caracteres')
+    }
 }
 
-// falta consultar si es la misma zona

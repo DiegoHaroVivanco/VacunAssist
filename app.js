@@ -67,6 +67,22 @@ app.get('/areaPersonal', authController.isAuthenticated,(req, res)=>{
      res.render('dash')
 })
 
+app.get('/areaPersonal/editarperfil', (req, res) =>{
+    res.sendFile(__dirname + '/public/area-paciente/perfilpaciente.html')
+})
+
+
+app.get('/areaPersonal/js/perfilpaciente.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/area-paciente/perfilpaciente.js')
+
+})
+
+
+app.get('/datosusuarioPaciente/', authController.dataUsuarioPaciente,(req, res)=>{
+
+})
+
+
 // RUTAS DE VACUNADOR
 
 app.get('/loginVacunador', (req, res) => {
@@ -82,7 +98,7 @@ app.get('/recuperar-passVacunador', (req, res)=>{
 })
 
 app.get('/areaPersonalVacunador', controllerVacunador.isAuthenticated,(req, res)=>{
-     res.render('dashVacunador')
+    res.render('dashVacunador')
 })
 
 app.get('/areaPersonalVacunador/dashboard.js', (req, res)=>{
@@ -99,9 +115,12 @@ app.get('/areaPersonalVacunador/js/perfilvacunador.js', (req, res)=>{
 
 })
 
-app.get('/datosusuarios/', authController.dataUsuarios,(req, res)=>{
+app.get('/datosusuarioVacunador/', controllerVacunador.dataUsuarioVacunador,(req, res)=>{
 
 })
+
+
+
 
 // RUTAS DE ADMIN
 
@@ -203,11 +222,21 @@ app.post('/stockfiebre3', authController.actualizarfiebre3)
 app.post('/stockcovid3m', authController.actualizarstockcovid3m)
 app.post('/stockcovid3p', authController.actualizarstockcovid3p)
 
-app.post('/cambiarpasswordvacunador', controllerVacunador.cambiarContraseña)
-app.put('/cambiarpasswordvacunador', controllerVacunador.cambiarContraseña)
+app.post('/cambiarpasswordvacunador', controllerVacunador.cambiarContrasena)
+app.put('/cambiarpasswordvacunador', controllerVacunador.cambiarContrasena)
 
 
 app.post('/actualizarzona', controllerVacunador.actualizarZonaVacunador)
+
+
+
+app.post('/cambiarpasswordpaciente', authController.cambiarContrasena)
+app.put('/cambiarpasswordpaciente', authController.cambiarContrasena)
+app.post('/cambiarestadoriesgo', authController.cambiarEstadoRiesgo)
+
+app.post('/actualizarzonapaciente', authController.actualizarZonaPaciente)
+
+
 
 app.listen(3000, ()=>{
     console.log('Server corriendo en http://localhost:3000')

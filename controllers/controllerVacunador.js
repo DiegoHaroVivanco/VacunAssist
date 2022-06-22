@@ -42,23 +42,27 @@ exports.login = async (req, res) => {
                     const dni = results[0].dni
                     const jToken = jwt.sign({ dni: dni }, 'super_secret')
                     console.log("Token: " + jToken + " Para el usuario: " + user)
-                    console.log("token sin guardar: " +token)
                     console.log("token creado: " + results[0].token)
                     userToken.tokenHash = results[0].token
                      const cookiesOptions = {
                         expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
                         httpOnly: true
                     }
-                    res.cookie('jwt', jToken, cookiesOptions)
+                    conexion.query("UPDATE vacunadores SET jsontoken = '"+jToken+"' WHERE dni= '"+dni+"'", async (error, results)=>{
+                        if(error) throw error;
 
-                    res.render('loginVacunador', {
-                        alert: true,
-                        alerTitle: "",
-                        alertMessage: "Ingrese el token de seguridad",
-                        alertIcon: 'success',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        ruta: 'autenticarVacunador'
+                        res.cookie('jwt', jToken, cookiesOptions)
+
+                        res.render('login', {
+                            alert: true,
+                            alerTitle: "Nombre de usuario y contraseña correctos",
+                            alertMessage: "Se lo redigira para el ingreso del token de seguridad",
+                            alertIcon: 'success',
+                            showConfirmButton: true,
+                            timer: 3500,
+                            ruta: 'autenticarVacunador'
+                        })
+
                     })
                 }
             })
@@ -71,31 +75,58 @@ exports.login = async (req, res) => {
 
 exports.autenticar = (req, res) => {
     try {
-        const token = req.body.token
-        console.log(token)
-        console.log(userToken.tokenHash)
-        console.log(token === userToken.tokenHash)
-        if (token === userToken.tokenHash) {
-            res.render('loginVacunador', {
-                alert: true,
-                alerTitle: "Token correcto",
-                alertMessage: "Inicio de sesion correcto",
-                alertIcon: 'success',
-                showConfirmButton: false,
-                timer: 2500,
-                ruta: 'areaPersonalVacunador'
-            })
-        } else {
-            res.render('loginVacunador', {
-                alert: true,
-                alerTitle: "Error",
-                alertMessage: "Token de seguridad icorrecto",
-                alertIcon: 'error',
-                showConfirmButton: false,
-                timer: false,
-                ruta: 'loginVacunador'
-            })
-        }
+        let token = req.body.token
+        // console.log(token)
+        // console.log("token local: "+userToken.tokenHash)
+        // console.log(token === userToken.tokenHash)
+        
+        conexion.query("SELECT * FROM vacunadores WHERE token = '"+token+"'", (error, results) => {
+            console.log("data" +results[0].token)
+            if(results[0].token === token){
+                res.render('autenticarVacunador', {
+                    alert: true,
+                    alerTitle: "Token correcto",
+                    alertMessage: "Inicio de sesion correcto",
+                    alertIcon: 'success',
+                    showConfirmButton: true,
+                    timer: 2500,
+                    ruta: 'areaPersonalVacunador'
+                })
+            } else {
+                res.render('autenticarVacunador', {
+                    alert: true,
+                    alerTitle: "Error",
+                    alertMessage: "Token de seguridad incorrecto",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: 2500,
+                    ruta: 'autenticarVacunador'
+                })
+            }
+            
+        })    
+        
+        // if (token === userToken.tokenHash) {
+        //     res.render('autenticarVacunador', {
+        //         alert: true,
+        //         alerTitle: "Token correcto",
+        //         alertMessage: "Inicio de sesion correcto",
+        //         alertIcon: 'success',
+        //         showConfirmButton: true,
+        //         timer: 2500,
+        //         ruta: 'areaPersonalVacunador'
+        //     })
+        // } else {
+        //     res.render('autenticarVacunador', {
+        //         alert: true,
+        //         alerTitle: "Error",
+        //         alertMessage: "Token de seguridad incorrecto",
+        //         alertIcon: 'error',
+        //         showConfirmButton: true,
+        //         timer: 2500,
+        //         ruta: 'autenticarVacunador'
+        //     })
+        // }
 
     } catch (error) {
         console.log(error)
@@ -185,57 +216,54 @@ exports.recuperarContraseña = async (req, res) =>{
 }
 
 exports.actualizarZonaVacunador = (req, res) =>{
-    
     const zonaNueva = req.body.zona
+    console.log("Zona NUEVA: " + zonaNueva)
+    let cookieZona = req.cookies.jwt
+    console.log("token: " + req.cookies.jwt);    
 
-    conexion.query("SELECT * FROM vacunadores",(error, results) => {
-        console.log(results[0].Zona)
-        if(results[0].Zona != 'Terminal de omnibus' && results[0].Zona != 'Municipaliad' && results[0].Zona != 'Cementerio municipal'){
-            res.redirect('/areaPersonalVacunador/editarperfil') 
-        }else{
-            conexion.query("UPDATE Usuarios SET Zona = '"+zonaNueva+"' WHERE dni=10583200",(error, results) => {
+    conexion.query("SELECT * FROM vacunadores WHERE jsontoken = '"+cookieZona+"' ",(error, results) => {
+        console.log(results[0]);
+        
+            conexion.query("UPDATE vacunadores SET Zona = '"+zonaNueva+"' WHERE jsontoken = '"+cookieZona+"'",(error, results) => {
                 if(error) throw error;
-
                 res.redirect('/areaPersonalVacunador/editarperfil')            
             })
-        }
+        
         
         
     })
 }
 
-exports.cambiarContraseña = async (req, res) =>{
-    const email = 'diegolautaro16@gmail.com'
+exports.cambiarContrasena = async (req, res) =>{
     const passTemporal = req.body.pass
+    let cookieZona = req.cookies.jwt
     let passHash = await bcryptjs.hash(passTemporal, 8)
-    const linkLogin = `http://localhost:3000/loginVacunador`
 
     try {
         //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
-        conexion.query('SELECT * FROM vacunadores WHERE WHERE dni=41567454',  async(error, results) => {
-
+        conexion.query("SELECT * FROM vacunadores WHERE jsontoken = '"+cookieZona+"' ", (error, results) => {
+                console.log(results[0])
                 // actualizo la contraseña en la db para el email ingresado
-                conexion.query("UPDATE vacunadores SET Pass = '"+passHash+"' WHERE dni=41567454", async (error, results)=>{
+                conexion.query("UPDATE vacunadores SET Pass = '"+passHash+"' WHERE jsontoken = '"+cookieZona+"'", (error, results)=>{
                     if(error) throw error;
                     res.redirect('/areaPersonalVacunador/editarperfil') 
-              
-                    await transporter.sendMail({ // envío email al campo que ingreso el usuario
-                        from: '"Recuperación de contraseña"',
-                        to: email,
-                        subject: "Recuperacion de contraseña",
-                        html: `
-                            <b>Tu nueva contraseña es: </b>
-                            <p> ${passTemporal}</p>
-                            <b>Inicia sesión ingresando a: </b>
-                            <a href="${linkLogin}">${linkLogin}</a>
-                        `
-                    })
                 })
-            
 
         })        
     } catch (error) {
         console.log(error)
     }
 
+}
+
+
+exports.dataUsuarioVacunador = (req, res) =>{
+    let cookieZona = req.cookies.jwt
+
+    conexion.query("SELECT * FROM vacunadores WHERE jsontoken = '"+cookieZona+"' ",(error, results) => {
+        if(error) throw error;
+         //console.log(results)
+        res.json(results)
+    
+    })    
 }

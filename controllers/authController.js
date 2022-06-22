@@ -24,42 +24,69 @@ exports.register = async (req, res) => {
         //console.log(nom + " - " + ape + " - " + pass)
         //console.log(passHash)
 
-        //     
-        // conexion.query('SELECT * FROM Usuarios WHERE email = email', (error, results) => {
-        //     // if any error while executing above query, throw error
-        //     if (error) throw error;
-        //     // if there is no error, you have the result
-        //     // iterate for all the rows in result
-        //     Object.keys(results).forEach((key) =>{
-        //         let row = results[key];
-        //         console.log(row.Email)
-        //         if(row.Email){
-        //             repeated = true;    
-        //         }
-                
-        //     })
-        // })
+        const linkLogin = `http://localhost:3000/login`
 
-        conexion.query('INSERT INTO Usuarios SET ?', {
-            dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: token
-            }, (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
+
+        conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"' OR dni = '"+dni+"' " , (error, results) => { //selecciono a los usuarios con el email ingresado
+            
+            if(results.length != 0) {
+                console.log(results[0].Email)
+                console.log(results[0].dni)
+                if(results[0].Email == email){
                     res.render('register', {
-                    alert: true,
-                    alerTitle: "Registro exitoso",
-                    alertMessage: "Se envió un token al email ingresado",
-                    alertIcon: 'success',
-                    showConfirmButton: true,
-                    timer: 3000,
-                    ruta: 'login' // despues tiene que ir a la ruta para cargar vacunas
-                })
-
-                    //res.redirect('/login')
+                        alert: true,
+                        alerTitle: "Error",
+                        alertMessage: "El email ingresado ya se encuentra registrado",
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'registro'
+                    })
+                }else if(results[0].dni == dni){
+                    res.render('register', {
+                        alert: true,
+                        alerTitle: "Error",
+                        alertMessage: "El dni ingresado ya se encuentra registrado",
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'registro'
+                    })
                 }
+            }else{
+                conexion.query('INSERT INTO Usuarios SET ?', {
+                    dni: dni, nom: nom, ape: ape, FechaNac: fecha, Zona: zona, Email: email, Pass: passHash, token: token
+                    }, async (error, results) => {
+                        if (error) {
+                            throw error;
+                        } else {
+                            res.render('register', {
+                                alert: true,
+                                alerTitle: "Registro exitoso",
+                                alertMessage: "Se envió un token al email ingresado",
+                                alertIcon: 'success',
+                                showConfirmButton: true,
+                                timer: 3000,
+                                ruta: 'login' // despues tiene que ir a la ruta para cargar vacunas
+                             })
 
-            })
+                             await transporter.sendMail({ // envío email al campo que ingreso el usuario
+                                from: '"Token de seguridad"',
+                                to: email,
+                                subject: "Token de seguridad",
+                                html: `
+                                    <b>Tu token de seguridad es: </b>
+                                    <p> ${token}</p>
+                                    <b>Inicia sesión ingresando a: </b>
+                                    <a href="${linkLogin}">${linkLogin}</a>
+                                `
+                            })
+                            
+                    }
+
+                })
+            }
+        })         
           
     } catch (error) {
         console.log(error)
@@ -108,17 +135,25 @@ exports.login = async (req, res) => {
                         expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
                         httpOnly: true
                     }
-                    res.cookie('jwt', jToken, cookiesOptions)
+                    conexion.query("UPDATE Usuarios SET jsontoken = '"+jToken+"' WHERE dni= '"+dni+"'", async (error, results)=>{
+                        if(error) throw error;
 
-                    res.render('login', {
-                        alert: true,
-                        alerTitle: "",
-                        alertMessage: "Ingrese el token de seguridad",
-                        alertIcon: 'success',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        ruta: 'autenticar'
+
+
+                        res.cookie('jwt', jToken, cookiesOptions)
+
+                        res.render('login', {
+                            alert: true,
+                            alerTitle: "Nombre de usuario y contraseña correctos",
+                            alertMessage: "Se lo redigira para el ingreso del token de seguridad",
+                            alertIcon: 'success',
+                            showConfirmButton: true,
+                            timer: 3500,
+                            ruta: 'autenticar'
+                        })
+
                     })
+
                 }
             })
         }
@@ -149,11 +184,11 @@ exports.autenticar = (req, res) => {
             res.render('autenticar', {
                 alert: true,
                 alerTitle: "Error",
-                alertMessage: "Token de seguridad icorrecto",
+                alertMessage: "Token de seguridad incorrecto",
                 alertIcon: 'error',
                 showConfirmButton: true,
                 timer: 2500,
-                ruta: 'login'
+                ruta: 'autenticar'
             })
         }
 
@@ -245,6 +280,75 @@ exports.recuperarContraseña = async (req, res) =>{
 }
 
 
+
+exports.dataUsuarioPaciente = (req, res) =>{
+    let cookieZona = req.cookies.jwt
+
+    conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieZona+"' ",(error, results) => {
+        if(error) throw error;
+         //console.log(results)
+        res.json(results)
+    
+    })    
+}
+
+
+exports.cambiarContrasena = async (req, res) =>{
+
+    const passTemporal = req.body.pass
+    let cookieZona = req.cookies.jwt
+    let passHash = await bcryptjs.hash(passTemporal, 8)
+
+    try {
+        conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieZona+"' ", (error, results) => {
+                console.log(results[0])
+                // actualizo la contraseña en la db
+                conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE jsontoken = '"+cookieZona+"'", (error, results)=>{
+                    if(error) throw error;
+                    res.redirect('/areaPersonal/editarperfil')
+                })
+
+        })        
+    } catch (error) {
+        console.log(error)
+    }
+
+
+}
+
+
+exports.actualizarZonaPaciente = (req, res) =>{
+    const zonaNueva = req.body.zona
+    console.log("Zona NUEVA: " + zonaNueva)
+    let cookieZona = req.cookies.jwt
+    console.log("token: " + req.cookies.jwt);    
+
+    conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieZona+"' ",(error, results) => {
+        console.log(results[0]);
+        
+            conexion.query("UPDATE Usuarios SET Zona = '"+zonaNueva+"' WHERE jsontoken = '"+cookieZona+"'",(error, results) => {
+                if(error) throw error;
+                res.redirect('/areaPersonal/editarperfil')            
+            })
+        
+        
+        
+    })
+}
+
+exports.cambiarEstadoRiesgo = (req, res) =>{
+    let estado = req.body.estado
+    let cookieZona = req.cookies.jwt
+    console.log("estado: "+estado)
+    conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieZona+"' ",(error, results) => {
+
+        conexion.query("UPDATE Usuarios SET riesgo = '"+estado+"' WHERE jsontoken = '"+cookieZona+"'",(error, results) => {
+            if(error) throw error;
+            res.redirect('/areaPersonal/editarperfil')            
+        })
+    })
+
+}
 
 
 // controlers del admin
@@ -372,14 +476,6 @@ exports.infoVacunatorios = (req, res) =>{
     })
 }
 
-exports.dataUsuarios = (req, res) =>{
-    conexion.query('SELECT * FROM Usuarios',(error, results) => {
-        if(error) throw error;
-         //console.log(results)
-        res.json(results)
-    
-    })    
-}
 
 
 
