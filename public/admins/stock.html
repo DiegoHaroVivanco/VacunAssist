@@ -20,6 +20,9 @@
             <div id="vacA">
                 <h2 id="vacunatorio2">Vacunatorio Municipal</h2>
                 <button type="button" onclick="mostrarStock1A();">Stock Gripe</button>
+                <button type="button" onclick="mostrarStock1B();">Stock Fiebre Amarilla</button>
+                <button type="button" onclick="mostrarStock1C();">Stock Covid</button>
+
                 <h3 id="gripe1"></h3>
                 <form method="post" action="/stockgripe2" id="form1">
                     <label for="nuevoStock1">Nuevo Stock</label>
@@ -27,8 +30,6 @@
                     <button type="submit" onclick="capturarA();">Actualizar</button>
  
                 </form> 
-
-                <button type="button" onclick="mostrarStock1B();">Stock Fiebre Amarilla</button>
                 <h3 id="fiebre1"></h3>
                 <form method="post" action="/stockfiebre2" id="form2">
                     <label for="nuevoStock2">Nuevo Stock</label>
@@ -36,31 +37,37 @@
                     <button type="submit" onclick="capturarB();">Actualizar</button>
                 </form>
 
-                <button type="button" onclick="mostrarStock1C();">Stock Covid</button>
-                <div id="divM">
+                <div class="covidVacunas">
+                  <div id="divM">
                     <h3>Moderna</h3>
                     <h3 id="covid1M"></h3>
-                </div>
-                <form method="post" action="/stockcovid2m" id="form3M">
-                    <label for="nuevoStock3M">Nuevo Stock</label>
-                    <input type="number" name="valorcovid2m" id="nuevoStock3M" onclick="capturarActual3M();">
-                    <button type="submit" onclick="capturarCM();">Actualizar</button>
-                </form>
+                    <form method="post" action="/stockcovid2m" id="form3M">
+                      <label for="nuevoStock3M">Nuevo Stock</label>
+                      <input type="number" name="valorcovid2m" id="nuevoStock3M" onclick="capturarActual3M();">
+                      <button type="submit" onclick="capturarCM();">Actualizar</button>
+                    </form>
+                  </div>
 
-                <div id="divP">
+                  <div id="divP">
                     <h3>Phizer</h3>
                     <h3 id="covid1P"></h3>
-                </div>
-                <form method="post" action="/stockcovid2p" id="form3P">
-                    <label for="nuevoStock3P">Nuevo Stock</label>
-                    <input type="number" name="valorcovid2p" id="nuevoStock3P" onclick="capturarActual3P();">
-                    <button type="submit" onclick="capturarCP();">Actualizar</button>
-                </form>
+                    <form method="post" action="/stockcovid2p" id="form3P">
+                      <label for="nuevoStock3P">Nuevo Stock</label>
+                      <input type="number" name="valorcovid2p" id="nuevoStock3P" onclick="capturarActual3P();">
+                      <button type="submit" onclick="capturarCP();">Actualizar</button>
+                    </form>
+                 </div>
+              </div>
+
             </div>
 
             <div id="vacB">
                 <h2 id="vacunatorio1">Vacunatorio Cementerio</h2>
+
                 <button type="button" onclick="mostrarStock2A();">Stock Gripe</button>
+                <button type="button" onclick="mostrarStock2B();">Stock Fiebre Amarilla</button>
+                <button type="button" onclick="mostrarStock2C();">Stock Covid</button>
+
                 <h3 id="gripe2"></h3>
                 <form method="post" action="/stockgripe1" id="form4">
                     <label for="nuevoStock4">Nuevo Stock</label>
@@ -68,7 +75,6 @@
                     <button type="submit" onclick="capturarD();">Actualizar</button>
                 </form>
 
-                <button type="button" onclick="mostrarStock2B();">Stock Fiebre Amarilla</button>
                 <h3 id="fiebre2"></h3>
                 <form method="post" action="/stockfiebre1" id="form5">
                     <label for="nuevoStock5">Nuevo Stock</label>
@@ -76,33 +82,37 @@
                     <button type="submit" onclick="capturarE();">Actualizar</button>
                 </form>
 
-                <button type="button" onclick="mostrarStock2C();">Stock Covid</button>
-                
-                <div id="divM2">
+                <div class="covidVacunas">
+                  <div id="divM2">
                     <h3>Moderna</h3>
                     <h3 id="covid2M"></h3>
-                </div>
-                <form method="post" action="/stockcovid1m" id="form6M">
-                    <label for="nuevoStock6M">Nuevo Stock</label>
-                    <input type="number" name="valorcovid1m" id="nuevoStock6M" onclick="capturarActual6M();">
-                    <button type="submit" onclick="capturarFM();">Actualizar</button>
-                </form>
-
-                <div id="divP2">
+                    <form method="post" action="/stockcovid1m" id="form6M">
+                      <label for="nuevoStock6M">Nuevo Stock</label>
+                      <input type="number" name="valorcovid1m" id="nuevoStock6M" onclick="capturarActual6M();">
+                      <button type="submit" onclick="capturarFM();">Actualizar</button>
+                    </form>
+                  </div>
+                  
+                  <div id="divP2">
                     <h3>Phizer</h3>
                     <h3 id="covid2P"></h3>
-                </div>
-                <form method="post" action="/stockcovid1p" id="form6P">
-                    <label for="nuevoStock6P">Nuevo Stock</label>
-                    <input type="number" name="valorcovid1p" id="nuevoStock6P" onclick="capturarActual6P();">
-                    <button type="submit" onclick="capturarFP();">Actualizar</button>
-                </form>
+                    <form method="post" action="/stockcovid1p" id="form6P">
+                      <label for="nuevoStock6P">Nuevo Stock</label>
+                      <input type="number" name="valorcovid1p" id="nuevoStock6P" onclick="capturarActual6P();">
+                      <button type="submit" onclick="capturarFP();">Actualizar</button>
+                    </form>
+                  </div>
 
+                </div>
             </div>
 
             <div id="vacC">
                 <h2 id="vacunatorio3">Vacunatorio Omnibus</h2>
+
                 <button type="button" onclick="mostrarStock3A();">Stock Gripe</button>
+                <button type="button" onclick="mostrarStock3B();">Stock Fiebre Amarilla</button>
+                <button type="button" onclick="mostrarStock3C();">Stock Covid</button>
+                
                 <h3 id="gripe3"></h3>
                 <form method="post" action="/stockgripe3" id="form7">
                     <label for="nuevoStock7">Nuevo Stock</label>
@@ -110,7 +120,6 @@
                     <button type="submit" onclick="capturarG();">Actualizar</button>
                 </form>
 
-                <button type="button" onclick="mostrarStock3B();">Stock Fiebre Amarilla</button>
                 <h3 id="fiebre3"></h3>
                 <form method="post" action="/stockfiebre3" id="form8">
                     <label for="nuevoStock8">Nuevo Stock</label>
@@ -118,30 +127,31 @@
                     <button type="submit" onclick="capturarH();">Actualizar</button>
                 </form>
 
-                <button type="button" onclick="mostrarStock3C();">Stock Covid</button>
-
-                <div id="divM3">
+                <div class="covidVacunas">
+                  <div id="divM3">
                     <h3>Moderna</h3>
                     <h3 id="covid3M"></h3>
-                </div>
-                <form method="post" action="/stockcovid3m" id="form9M">
-                    <label for="nuevoStock9M">Nuevo Stock</label>
-                    <input type="number" name="valorcovid3m" id="nuevoStock9M" onclick="capturarActual9M();">
-                    <button type="submit" onclick="capturarIM();">Actualizar</button>
-                </form>
-
-                <div id="divP3">
+                    <form method="post" action="/stockcovid3m" id="form9M">
+                      <label for="nuevoStock9M">Nuevo Stock</label>
+                      <input type="number" name="valorcovid3m" id="nuevoStock9M" onclick="capturarActual9M();">
+                      <button type="submit" onclick="capturarIM();">Actualizar</button>
+                    </form>
+                  </div>
+                  
+                  <div id="divP3">
                     <h3>Phizer</h3>
                     <h3 id="covid3P"></h3>
+                    <form method="post" action="/stockcovid3p" id="form9P">
+                      <label for="nuevoStock9P">Nuevo Stock</label>
+                      <input type="number" name="valorcovid3p" id="nuevoStock9P" onclick="capturarActual9P();">
+                      <button type="submit" onclick="capturarIP();">Actualizar</button>
+                    </form>
+                  </div>
                 </div>
-                <form method="post" action="/stockcovid3p" id="form9P">
-                    <label for="nuevoStock9P">Nuevo Stock</label>
-                    <input type="number" name="valorcovid3p" id="nuevoStock9P" onclick="capturarActual9P();">
-                    <button type="submit" onclick="capturarIP();">Actualizar</button>
-                </form>
             </div>
         </div>
     </main>
+  </div>
     <script src="./js/actualizarStock.js"></script>
 </body>
 </html>

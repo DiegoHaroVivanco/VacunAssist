@@ -71,8 +71,16 @@ function mostrarVacunatorios2(){
 //Funciones stock vacunatorio 1
 
 function mostrarStock1A(){
+
+    document.getElementById('fiebre1').style.display = 'none';
+    document.getElementById('form2').style.display = 'none';
+    document.getElementById('divM').style.display = 'none';
+    document.getElementById('form3M').style.display = 'none';
+    document.getElementById('divP').style.display = 'none';
+    document.getElementById('form3P').style.display = 'none';
     document.getElementById('gripe1').style.display = 'block';
     document.getElementById('form1').style.display = 'block';
+
 }
 
 function capturarActual1() {
@@ -82,6 +90,12 @@ function capturarActual1() {
 function mostrarStock1B(){
     document.getElementById('fiebre1').style.display = 'block';
     document.getElementById('form2').style.display = 'block';
+    document.getElementById('gripe1').style.display = 'none';
+    document.getElementById('form1').style.display = 'none';
+    document.getElementById('divM').style.display = 'none';
+    document.getElementById('form3M').style.display = 'none';
+    document.getElementById('divP').style.display = 'none';
+    document.getElementById('form3P').style.display = 'none';
 }
 
 function capturarActual2() {
@@ -93,6 +107,10 @@ function mostrarStock1C(){
     document.getElementById('form3M').style.display = 'block';
     document.getElementById('divP').style.display = 'block';
     document.getElementById('form3P').style.display = 'block';
+    document.getElementById('gripe1').style.display = 'none';
+    document.getElementById('form1').style.display = 'none';
+    document.getElementById('fiebre1').style.display = 'none';
+    document.getElementById('form2').style.display = 'none';
 }
 
 function capturarActual3M(){
@@ -128,6 +146,15 @@ function capturarCP(){
 function mostrarStock2A(){
     document.getElementById('gripe2').style.display = 'block';
     document.getElementById('form4').style.display = 'block';
+
+    document.getElementById('fiebre2').style.display = 'none';
+    document.getElementById('form5').style.display = 'none';
+
+    document.getElementById('divM2').style.display = 'none';
+    document.getElementById('form6M').style.display = 'none';
+    document.getElementById('divP2').style.display = 'none';
+    document.getElementById('form6P').style.display = 'none';
+
 }
 
 function capturarActual4() {
@@ -137,6 +164,14 @@ function capturarActual4() {
 function mostrarStock2B(){
     document.getElementById('fiebre2').style.display = 'block';
     document.getElementById('form5').style.display = 'block';
+
+    document.getElementById('gripe2').style.display = 'none';
+    document.getElementById('form4').style.display = 'none';
+
+    document.getElementById('divM2').style.display = 'none';
+    document.getElementById('form6M').style.display = 'none';
+    document.getElementById('divP2').style.display = 'none';
+    document.getElementById('form6P').style.display = 'none';
 }
 
 function capturarActual5() {
@@ -146,8 +181,14 @@ function capturarActual5() {
 function mostrarStock2C(){
     document.getElementById('divM2').style.display = 'block';
     document.getElementById('form6M').style.display = 'block';
+
     document.getElementById('divP2').style.display = 'block';
     document.getElementById('form6P').style.display = 'block';
+
+    document.getElementById('gripe2').style.display = 'none';
+    document.getElementById('form4').style.display = 'none';
+    document.getElementById('fiebre2').style.display = 'none';
+    document.getElementById('form5').style.display = 'none';
 }
 
 function capturarActual6M() {
@@ -183,6 +224,14 @@ function capturarFP(){
 function mostrarStock3A(){
     document.getElementById('gripe3').style.display = 'block';
     document.getElementById('form7').style.display = 'block';
+
+    document.getElementById('fiebre3').style.display = 'none';
+    document.getElementById('form8').style.display = 'none';
+
+    document.getElementById('divM3').style.display = 'none';
+    document.getElementById('form9M').style.display = 'none';
+    document.getElementById('divP3').style.display = 'none';
+    document.getElementById('form9P').style.display = 'none';
 }
 
 function capturarActual7() {
@@ -193,6 +242,14 @@ function capturarActual7() {
 function mostrarStock3B(){
     document.getElementById('fiebre3').style.display = 'block';
     document.getElementById('form8').style.display = 'block';
+
+    document.getElementById('gripe3').style.display = 'none';
+    document.getElementById('form7').style.display = 'none';
+
+    document.getElementById('divM3').style.display = 'none';
+    document.getElementById('form9M').style.display = 'none';
+    document.getElementById('divP3').style.display = 'none';
+    document.getElementById('form9P').style.display = 'none';
 }
 
 function capturarActual8() {
@@ -204,6 +261,12 @@ function mostrarStock3C(){
     document.getElementById('form9M').style.display = 'block';
     document.getElementById('divP3').style.display = 'block';
     document.getElementById('form9P').style.display = 'block';
+
+    document.getElementById('fiebre3').style.display = 'none';
+    document.getElementById('form8').style.display = 'none';
+
+    document.getElementById('gripe3').style.display = 'none';
+    document.getElementById('form7').style.display = 'none';
 }
 
 function capturarActual9M() {
