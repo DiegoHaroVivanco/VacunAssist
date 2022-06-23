@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -151,12 +151,12 @@
             </div>
         </div>
     </main>
-  </div>
     <script src="./js/actualizarStock.js"></script>
 </body>
-</html>
+</html> -->
 
 <!-- <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -417,3 +417,449 @@
 
 </body>
 </html> -->
+
+
+
+
+
+
+<!-- --------IMPLEMENTACION DE PRUEBA----------- -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- <link rel="stylesheet" href="../css/main.css"> -->
+  <link rel="shortcut icon" href="../img/icon-vacun.png" type="image/x-icon">
+  <title>Actualizar stock</title>
+</head>
+
+<body>
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light" id="sidebar-wrapper">
+      <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
+        <Codersbite>
+          <img src="../img/icon-vacun.png" alt="logo-vacunassist" sizes="" width="50" height="50">
+          <h4>VACUNASSIST</h4>
+      </div>
+      <div class="list-group list-group-flush my-3">
+
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text "><i
+            class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+
+        <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold" href="/areaPersonalAdmin/registroVacunador">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+          </svg>
+          
+          Registrar Vacunador
+        </a>
+
+        <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
+          href="/areaPersonalAdmin/cambiarnombrevacunatorio">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
+            viewBox="0 0 16 16">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+            <path fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+          </svg>
+          Cambiar nombre<br>de vacunatorio
+        </a>
+
+        <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold active" href="/areaPersonalAdmin/actualizarstock">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capslock-fill" viewBox="0 0 16 16">
+            <path d="M7.27 1.047a1 1 0 0 1 1.46 0l6.345 6.77c.6.638.146 1.683-.73 1.683H11.5v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1H1.654C.78 9.5.326 8.455.924 7.816L7.27 1.047zM4.5 13.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1z"/>
+          </svg>
+
+          Actualizar stock de las vacunas
+        </a>
+
+        <!-- <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold" href="#">
+          <span data-feather="layers"></span>
+          Modificar zona vacunador 
+        </a> -->
+
+        <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-check" viewBox="0 0 16 16">
+            <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"/>
+            <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"/>
+            <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3Z"/>
+          </svg>
+
+          Evaluar asignación de turno de la fiebre amarilla
+        </a>
+
+
+        <h4 class=" bg-light sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-success">
+          <span>REPORTES</span>
+
+        </h4>
+
+        <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold" href="#">
+          <i class="fas fa-paperclip me-2"></i>
+            Visualizar personas registradas
+        </a>
+
+        <a class="list-group-item list-group-item-action bg-transparent second-text fw-bold" href="#">
+          <i class="fas fa-paperclip me-2"></i>
+          Visualizar planilla de pacientes
+        </a>
+
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+            class="fas fa-chart-line me-2"></i>Analytics</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+            class="fas fa-paperclip me-2"></i>Reports</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+            class="fas fa-shopping-cart me-2"></i>Store Mng</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+            class="fas fa-gift me-2"></i>Products</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+            class="fas fa-comment-dots me-2"></i>Chat</a>
+        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+            class="fas fa-map-marker-alt me-2"></i>Outlet</a> -->
+
+        <a href="/logoutAdministrador"
+          class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
+            class="fas fa-power-off me-2"></i>Cerrar sesión</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+          <h2 class="fs-2 m-0">Dashboard</h2>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>John Doe
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li> -->
+
+            <div class="nav-item dropdown">
+              <div class="nav-item text-nowrap">
+                <a type="button" class="nav-link  second-text fw-bold" href="/logoutAdministrador">Cerrar sesión</a>
+              </div>
+            </div>
+
+          </ul>
+        </div>
+      </nav>
+
+      <div>
+
+        <button id="btnmostrar" type="button">Actualizar stock vacunas</button>
+        <div id="vacunatorios2">
+
+          <div id="vacA">
+            <h2 id="vacunatorio2">Vacunatorio Municipal</h2>
+            <button type="button" onclick="mostrarStock1A();">Stock Gripe</button>
+            <button type="button" onclick="mostrarStock1B();">Stock Fiebre Amarilla</button>
+            <button type="button" onclick="mostrarStock1C();">Stock Covid</button>
+
+            <h3 id="gripe1"></h3>
+            <form method="post" action="/stockgripe2" id="form1">
+              <label for="nuevoStock1">Nuevo Stock</label>
+              <input type="number" name="valorgripe2" id="nuevoStock1" onclick="capturarActual1();">
+              <button type="submit" onclick="capturarA();">Actualizar</button>
+
+            </form>
+            <h3 id="fiebre1"></h3>
+            <form method="post" action="/stockfiebre2" id="form2">
+              <label for="nuevoStock2">Nuevo Stock</label>
+              <input type="number" name="valorfiebre2" id="nuevoStock2" onclick="capturarActual2();">
+              <button type="submit" onclick="capturarB();">Actualizar</button>
+            </form>
+
+            <div class="covidVacunas">
+              <div id="divM">
+                <h3>Moderna</h3>
+                <h3 id="covid1M"></h3>
+                <form method="post" action="/stockcovid2m" id="form3M">
+                  <label for="nuevoStock3M">Nuevo Stock</label>
+                  <input type="number" name="valorcovid2m" id="nuevoStock3M" onclick="capturarActual3M();">
+                  <button type="submit" onclick="capturarCM();">Actualizar</button>
+                </form>
+              </div>
+
+              <div id="divP">
+                <h3>Phizer</h3>
+                <h3 id="covid1P"></h3>
+                <form method="post" action="/stockcovid2p" id="form3P">
+                  <label for="nuevoStock3P">Nuevo Stock</label>
+                  <input type="number" name="valorcovid2p" id="nuevoStock3P" onclick="capturarActual3P();">
+                  <button type="submit" onclick="capturarCP();">Actualizar</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="vacB">
+            <h2 id="vacunatorio1">Vacunatorio Cementerio</h2>
+
+            <button type="button" onclick="mostrarStock2A();">Stock Gripe</button>
+            <button type="button" onclick="mostrarStock2B();">Stock Fiebre Amarilla</button>
+            <button type="button" onclick="mostrarStock2C();">Stock Covid</button>
+
+            <h3 id="gripe2"></h3>
+            <form method="post" action="/stockgripe1" id="form4">
+              <label for="nuevoStock4">Nuevo Stock</label>
+              <input type="number" name="valorgripe1" id="nuevoStock4" onclick="capturarActual4();">
+              <button type="submit" onclick="capturarD();">Actualizar</button>
+            </form>
+
+            <h3 id="fiebre2"></h3>
+            <form method="post" action="/stockfiebre1" id="form5">
+              <label for="nuevoStock5">Nuevo Stock</label>
+              <input type="number" name="valorfiebre1" id="nuevoStock5" onclick="capturarActual5();">
+              <button type="submit" onclick="capturarE();">Actualizar</button>
+            </form>
+
+            <div class="covidVacunas">
+              <div id="divM2">
+                <h3>Moderna</h3>
+                <h3 id="covid2M"></h3>
+                <form method="post" action="/stockcovid1m" id="form6M">
+                  <label for="nuevoStock6M">Nuevo Stock</label>
+                  <input type="number" name="valorcovid1m" id="nuevoStock6M" onclick="capturarActual6M();">
+                  <button type="submit" onclick="capturarFM();">Actualizar</button>
+                </form>
+              </div>
+
+              <div id="divP2">
+                <h3>Phizer</h3>
+                <h3 id="covid2P"></h3>
+                <form method="post" action="/stockcovid1p" id="form6P">
+                  <label for="nuevoStock6P">Nuevo Stock</label>
+                  <input type="number" name="valorcovid1p" id="nuevoStock6P" onclick="capturarActual6P();">
+                  <button type="submit" onclick="capturarFP();">Actualizar</button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+          <div id="vacC">
+            <h2 id="vacunatorio3">Vacunatorio Omnibus</h2>
+
+            <button type="button" onclick="mostrarStock3A();">Stock Gripe</button>
+            <button type="button" onclick="mostrarStock3B();">Stock Fiebre Amarilla</button>
+            <button type="button" onclick="mostrarStock3C();">Stock Covid</button>
+
+            <h3 id="gripe3"></h3>
+            <form method="post" action="/stockgripe3" id="form7">
+              <label for="nuevoStock7">Nuevo Stock</label>
+              <input type="number" name="valorgripe3" id="nuevoStock7" onclick="capturarActual7();">
+              <button type="submit" onclick="capturarG();">Actualizar</button>
+            </form>
+
+            <h3 id="fiebre3"></h3>
+            <form method="post" action="/stockfiebre3" id="form8">
+              <label for="nuevoStock8">Nuevo Stock</label>
+              <input type="number" name="valorfiebre3" id="nuevoStock8" onclick="capturarActual8();">
+              <button type="submit" onclick="capturarH();">Actualizar</button>
+            </form>
+
+            <div class="covidVacunas">
+              <div id="divM3">
+                <h3>Moderna</h3>
+                <h3 id="covid3M"></h3>
+                <form method="post" action="/stockcovid3m" id="form9M">
+                  <label for="nuevoStock9M">Nuevo Stock</label>
+                  <input type="number" name="valorcovid3m" id="nuevoStock9M" onclick="capturarActual9M();">
+                  <button type="submit" onclick="capturarIM();">Actualizar</button>
+                </form>
+              </div>
+
+              <div id="divP3">
+                <h3>Phizer</h3>
+                <h3 id="covid3P"></h3>
+                <form method="post" action="/stockcovid3p" id="form9P">
+                  <label for="nuevoStock9P">Nuevo Stock</label>
+                  <input type="number" name="valorcovid3p" id="nuevoStock9P" onclick="capturarActual9P();">
+                  <button type="submit" onclick="capturarIP();">Actualizar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="container-fluid px-4">
+                <div class="row g-3 my-2">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">720</h3>
+                                <p class="fs-5">Products</p>
+                            </div>
+                            <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">4920</h3>
+                                <p class="fs-5">Sales</p>
+                            </div>
+                            <i
+                                class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">3899</h3>
+                                <p class="fs-5">Delivery</p>
+                            </div>
+                            <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">%25</h3>
+                                <p class="fs-5">Increase</p>
+                            </div>
+                            <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row my-5">
+                    <h3 class="fs-4 mb-3">Recent Orders</h3>
+                    <div class="col">
+                        <table class="table bg-white rounded shadow-sm  table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="50">#</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Television</td>
+                                    <td>Jonny</td>
+                                    <td>$1200</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Laptop</td>
+                                    <td>Kenny</td>
+                                    <td>$750</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Cell Phone</td>
+                                    <td>Jenny</td>
+                                    <td>$600</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Fridge</td>
+                                    <td>Killy</td>
+                                    <td>$300</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Books</td>
+                                    <td>Filly</td>
+                                    <td>$120</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">6</th>
+                                    <td>Gold</td>
+                                    <td>Bumbo</td>
+                                    <td>$1800</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">7</th>
+                                    <td>Pen</td>
+                                    <td>Bilbo</td>
+                                    <td>$75</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">8</th>
+                                    <td>Notebook</td>
+                                    <td>Frodo</td>
+                                    <td>$36</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">9</th>
+                                    <td>Dress</td>
+                                    <td>Kimo</td>
+                                    <td>$255</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">10</th>
+                                    <td>Paint</td>
+                                    <td>Zico</td>
+                                    <td>$434</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">11</th>
+                                    <td>Carpet</td>
+                                    <td>Jeco</td>
+                                    <td>$1236</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">12</th>
+                                    <td>Food</td>
+                                    <td>Haso</td>
+                                    <td>$422</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div> -->
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+  </div>
+  <script src="./js/actualizarStock.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var el = document.getElementById("wrapper");
+    var toggleButton = document.getElementById("menu-toggle");
+
+    toggleButton.onclick = function () {
+      el.classList.toggle("toggled");
+    };
+  </script>
+</body>
+
+</html>

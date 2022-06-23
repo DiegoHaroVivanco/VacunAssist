@@ -1,0 +1,172 @@
+:root {
+  /* --main-bg-color: #009d63; */
+  --main-bg-color: #198754;
+
+  --main-text-color: #198754;
+  --second-text-color: #bbbec5;
+  --second-bg-color: #c1efde;
+}
+
+.primary-text {
+  color: var(--main-text-color);
+}
+
+.second-text {
+  color: var(--second-text-color);
+}
+
+.primary-bg {
+  background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+  background-color: var(--second-bg-color);
+}
+
+.rounded-full {
+  border-radius: 100%;
+}
+
+#wrapper {
+  overflow-x: hidden;
+  background-image: linear-gradient(
+    to right,
+    #baf3d7,
+    #c2f5de,
+    #cbf7e4,
+    #d4f8ea,
+    #ddfaef
+  );
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  background-color: #A2CB83;
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  cursor: pointer;
+}
+
+.list-group-item {
+  border: none;
+  padding: 20px 30px;
+}
+
+.list-group-item.active {
+  background-color: transparent;
+  color: var(--main-text-color);
+  font-weight: bold;
+  border: none;
+}
+
+
+/*--------------------------------------------------------------*/
+
+/* body{
+    background-image: url('../admins/paven.png');
+} */
+#vacunatorios{
+  display: none;
+}
+
+#formulario1, #formulario2, #formulario3{
+  display: none;
+}
+
+#nomVac1, #nomVac2, #nomVac3{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/*Empieza CSS de stock*/
+
+#vacunatorios2{
+  display: none;
+}
+
+#gripe1, #fiebre1{
+  display: none;
+}
+
+#divM, #divP, #divM2, #divP2, #divP3, #divM3{
+  display: none;
+}
+
+.covidVacunas{
+  display: flex;
+  justify-items: center;
+}
+
+#divM, #divM2, #divM3{
+  margin-right: 40px;
+}
+
+#gripe2, #fiebre2, #covid2{
+  display: none;
+}
+
+#gripe3, #fiebre3, #covid3{
+  display: none;
+}
+
+#form1, #form2, #form3M, #form3P, #form4,#form5,#form6M, #form6P, #form7,#form8,#form9P, #form9M{
+  display: none;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+
+#vacA, #vacB, #vacC{
+  margin-top: 80px;
+  margin-bottom: 100px;
+}
+
+
+#formZona, #formContra, #formRiesgo{
+  display: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/*---------------------------------------------------------------------------*/
+
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+
+

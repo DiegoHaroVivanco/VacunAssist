@@ -358,8 +358,20 @@ exports.loginAdmin = (req, res) =>{
     const pass = req.body.password
     console.log(token)
     conexion.query("SELECT * FROM admins WHERE token = '"+token+"' AND pass = '"+pass+"' " ,(error, results) => {
-        console.log("Data: " +results[0].ape)
-        if(token === results[0].token && pass === results[0].pass){
+        console.log("Data: " +results.length)
+        if(results.length == 0) {
+
+            res.render('inicioAdmin', {
+                alert: true,
+                alerTitle: "Error",
+                alertMessage: "Token y/o contraseña incorrectos",
+                alertIcon: 'error',
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'autenticacion' 
+            }) 
+        }else if (token === results[0].token && pass === results[0].pass){
+
             const id = results[0].ape
             const jToken = jwt.sign({ id: id }, 'super_secret')
             console.log("Token: " + jToken + " Para el usuario: " + id)
@@ -374,7 +386,7 @@ exports.loginAdmin = (req, res) =>{
             res.render('inicioAdmin', {
                 alert: true,
                 alerTitle: "Token y contraseña correctos",
-                alertMessage: "Inicio de sesion correcto",
+                alertMessage: "Inicio de sesión correcto",
                 alertIcon: 'success',
                 showConfirmButton: true,
                 timer: false,
@@ -384,7 +396,7 @@ exports.loginAdmin = (req, res) =>{
             res.render('inicioAdmin', {
                 alert: true,
                 alerTitle: "Error",
-                alertMessage: "Token inválido",
+                alertMessage: "Token y/o contraseña incorrectos",
                 alertIcon: 'error',
                 showConfirmButton: true,
                 timer: false,

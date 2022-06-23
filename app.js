@@ -154,6 +154,12 @@ app.get('/areaPersonalAdmin/css/main.css', (req, res)=>{
 
 })
 
+
+app.get('/areaPersonalAdmin/styles.css', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/styles.css')
+
+})
+
 app.get('/areaPersonalAdmin/js/cambiarNombreVacunatorio.js', (req, res)=>{
     res.sendFile(__dirname + '/public/admins/js/cambiarNombreVacunatorio.js')
 
