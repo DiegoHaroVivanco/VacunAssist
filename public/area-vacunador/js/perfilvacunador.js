@@ -31,6 +31,7 @@ var zona
 
 function mostrarFormZona(){
     document.getElementById('formZona').style.display = 'block';
+    document.getElementById('formContra').style.display = 'none';
 }
 
 function capturarZona(){
@@ -55,6 +56,7 @@ function cambiarZona(unaZona){
 
 function mostrarFormContra(){
     document.getElementById('formContra').style.display = 'block';
+    document.getElementById('formZona').style.display = 'none';
 }
 
 function capturarContra(){

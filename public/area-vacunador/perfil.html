@@ -9,11 +9,12 @@
 
     <title>Editar Perfil</title>
 </head>
-<body>
+<body class="bodyPerfilVacunador">
     <header>
-        <h1>Bienvenido</h1>
+        <h1>Modificar mis datos</h1>
     </header>
     <button id="btnmostrar" type="button">Cambiar Zona</button>
+    <button type="button" onclick = "mostrarFormContra();">Cambiar Contraseña</button> 
     <form id="formZona" method="post" action="/actualizarzona">
         <h3 id="zonaAct"></h3>
         <h3>Seleccione la nueva zona</h3>
@@ -28,13 +29,13 @@
 
         <!-- <input type="text" name="zona" id="nuevaZona"> -->
 
-        <button type="submit" onclick="capturarZona();">Guardar</button>
+        <button id="botonZona" type="submit" onclick="capturarZona();">Guardar</button>
     </form>
 
-    <button type="button" onclick = "mostrarFormContra();">Cambiar Contraseña</button> 
     <form id="formContra" action="/cambiarpasswordvacunador" method="post">
-        <label for="zona">Ingrese su nueva Contraseña:</label>
-        <input type="password" name="pass" id="nuevaContra" required>
+        <h3>Ingrese su nueva Contraseña:</h3>
+        <label for="zona"></label>
+        <input type="password" placeholder="entre 2 y 8 caracteres" name="pass" id="nuevaContra" required>
         <button type="submit" onclick="capturarContra();">Guardar</button>
     </form>
     <script src="./js/perfilvacunador.js"></script>
