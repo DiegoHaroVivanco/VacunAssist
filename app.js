@@ -71,9 +71,17 @@ app.get('/areaPersonal/editarperfil', (req, res) =>{
     res.sendFile(__dirname + '/public/area-paciente/perfilpaciente.html')
 })
 
+app.get('/areaPersonal/verturnos', (req, res) =>{
+    res.sendFile(__dirname + '/public/area-paciente/turnos.html')
+})
 
 app.get('/areaPersonal/js/perfilpaciente.js', (req, res)=>{
     res.sendFile(__dirname + '/public/area-paciente/perfilpaciente.js')
+
+})
+
+app.get('/areaPersonal/turnos.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/area-paciente/turnos.js')
 
 })
 
@@ -82,6 +90,9 @@ app.get('/datosusuarioPaciente/', authController.dataUsuarioPaciente,(req, res)=
 
 })
 
+app.get('/datosUsuariosPacientes/', authController.dataUsuarios,(req, res)=>{
+
+})
 
 // RUTAS DE VACUNADOR
 
@@ -107,6 +118,12 @@ app.get('/areaPersonalVacunador/dashboard.js', (req, res)=>{
 
 app.get('/areaPersonalVacunador/editarperfil', (req, res)=>{
     res.sendFile(__dirname + '/public/area-vacunador/perfil.html')
+
+})
+// /areaPersonalVacunador/stylespvacunador.css
+
+app.get('/areaPersonalVacunador/stylespvacunador.css', (req, res)=>{
+    res.sendFile(__dirname + '/public/area-vacunador/stylespvacunador.css')
 
 })
 
@@ -146,6 +163,21 @@ app.get('/areaPersonalAdmin/cambiarnombrevacunatorio',(req, res) =>{
 
 })
 
+app.get('/areaPersonalAdmin/visualizarPacientes',(req, res) =>{
+    // console.log(__dirname)
+    res.sendFile(__dirname + '/public/admins/pacientesRegistrados.html')
+    // response.writeHead(200, {'content-tyoe':'application/javascript'})
+
+})
+
+app.get('/areaPersonalAdmin/pacientesfiebreamarilla',(req, res) =>{
+    // console.log(__dirname)
+    res.sendFile(__dirname + '/public/admins/pacientesfiebre.html')
+    // response.writeHead(200, {'content-tyoe':'application/javascript'})
+
+})
+
+
 app.get('/infoVacunatorios/', authController.infoVacunatorios,(req, res) =>{
 })
 
@@ -160,8 +192,25 @@ app.get('/areaPersonalAdmin/styles.css', (req, res)=>{
 
 })
 
+app.get('/areaPersonalAdmin/stylesvacunatorios.css', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/stylesvacunatorios.css')
+
+})
+
 app.get('/areaPersonalAdmin/js/cambiarNombreVacunatorio.js', (req, res)=>{
     res.sendFile(__dirname + '/public/admins/js/cambiarNombreVacunatorio.js')
+
+})
+
+
+
+app.get('/areaPersonalAdmin/js/pacientesfiebre.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/js/pacientesfiebre.js')
+
+})
+
+app.get('/areaPersonalAdmin/js/visualizarpacientes.js', (req, res)=>{
+    res.sendFile(__dirname + '/public/admins/js/visualizarpacientes.js')
 
 })
 
@@ -211,6 +260,8 @@ app.post('/recuperar-passVacunador', controllerVacunador.recuperarContraseña)
 app.put('/recuperar-passVacunador', controllerVacunador.recuperarContraseña)
 app.get('/logoutVacunador', controllerVacunador.logout)
 
+
+app.post('/pedirturnofiebre', authController.pedirTurnoFiebre)
 
 app.post('/cambiarnombrevacunatorio1', authController.cambiarVacunatorio1)
 app.post('/cambiarnombrevacunatorio2', authController.cambiarVacunatorio2)

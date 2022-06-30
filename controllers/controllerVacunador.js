@@ -216,18 +216,22 @@ exports.cambiarContrasena = async (req, res) =>{
     const passTemporal = req.body.pass
     let cookieZona = req.cookies.jwt
     let passHash = await bcryptjs.hash(passTemporal, 8)
-
+    console.log(passTemporal)
     try {
-        //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
-        conexion.query("SELECT * FROM vacunadores WHERE jsontoken = '"+cookieZona+"' ", (error, results) => {
-                console.log(results[0])
-                // actualizo la contraseña en la db para el email ingresado
-                conexion.query("UPDATE vacunadores SET Pass = '"+passHash+"' WHERE jsontoken = '"+cookieZona+"'", (error, results)=>{
-                    if(error) throw error;
-                    res.redirect('/areaPersonalVacunador/editarperfil') 
-                })
+        if(passTemporal.length >= 6){
+            //conexion.query("SELECT * FROM Usuarios WHERE Email = '"+email+"'", (error, results) => { //selecciono a los usuarios con el email ingresado
+            conexion.query("SELECT * FROM vacunadores WHERE jsontoken = '"+cookieZona+"' ", (error, results) => {
+                    console.log(results[0])
+                    // actualizo la contraseña en la db para el email ingresado
+                    conexion.query("UPDATE vacunadores SET Pass = '"+passHash+"' WHERE jsontoken = '"+cookieZona+"'", (error, results)=>{
+                        if(error) throw error;
+                        res.redirect('/areaPersonalVacunador/editarperfil') 
+                    })
 
-        })        
+            })
+        }else{
+            res.redirect('/areaPersonalVacunador/editarperfil') 
+        }
     } catch (error) {
         console.log(error)
     }

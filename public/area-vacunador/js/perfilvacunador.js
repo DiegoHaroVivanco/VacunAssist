@@ -65,10 +65,10 @@ function capturarContra(){
 }
 
 function cambiarContra(pass){
-    if(pass && pass.length >= 2 && pass.length <= 8){
+    if(pass && pass.length >= 6){
         alert ('la contraseña fue actualizada con éxito');
     }else{
-        alert('Ingrese una contraseña que tenga entre 2 y 8 caracteres')
+        alert('La contraseña debe tener al menos 6 caracteres')
     }
 }
 

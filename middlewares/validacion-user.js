@@ -10,8 +10,8 @@ exports.validacionUsuario = [
     .withMessage('Ingrese un email válido'),
     check('dni').exists().isNumeric().isLength({min: 7, max:8})
     .withMessage('Ingrese un DNI válido'),
-    check('password').trim().not().isEmpty().isLength({min:2, max:8})
-    .withMessage('La contraseña debe tener entre 2 y 8 digitios'),
+    check('password').trim().not().isEmpty().isLength({min:6, max:100})
+    .withMessage('La contraseña debe tener al menos 6 caracteres'),
     check('fechaNacimiento').exists().toDate().custom((value, {req})=>{
         if(Date.parse(value) > 1655175927016){
             throw new Error('Ingrese una fecha válida')

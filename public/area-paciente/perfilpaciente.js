@@ -17,14 +17,25 @@ const listarDatos =  async () =>{
 }
 
 listarDatos().then(data => {
+    let esDeRiesgo;
     //console.log(data)
+    if(data[0].riesgo == 1){ // true
+        esDeRiesgo = (' Si ' )
+    }else{ // false
+        esDeRiesgo =  (' No ' )       
+    }
+    let nacimiento = new Date(data[0].FechaNac)
+    document.querySelector('#tr').children[0].innerHTML = data[0].nom +" "+data[0].ape
+    document.querySelector('#tr').children[1].innerHTML = data[0].dni
+    document.querySelector('#tr').children[2].innerHTML = esDeRiesgo
+    document.querySelector('#tr').children[3].innerHTML = data[0].Zona
+    document.querySelector('#tr').children[4].innerHTML = data[0].Email
+    document.querySelector('#tr').children[5].innerHTML = nacimiento.getDate() +'/'+ (nacimiento.getMonth()+1)+'/'+nacimiento.getFullYear()
+
+
+
     zonaAct.innerHTML = ('Zona actual: ' + data[0].Zona)
 
-    if(data[0].riesgo == 1){ // true
-        document.getElementById("estadoActual").innerHTML = ('¿Es persona de riesgo? Si' )
-    }else{ // false
-        document.getElementById("estadoActual").innerHTML = ('¿Es persona de riesgo? No' )       
-    }
 
 })
 
@@ -68,11 +79,18 @@ var zona
 
 function mostrarFormZona(){
     document.getElementById('formZona').style.display = 'block';
+    document.getElementById('formRiesgo').style.display = 'none';
+    document.getElementById('formContra').style.display = 'none';
+
 }
 
 
 function mostrarFormRiesgo(){
     document.getElementById('formRiesgo').style.display = 'block';
+    document.getElementById('formZona').style.display = 'none';
+    document.getElementById('formContra').style.display = 'none';
+
+
 }
 
 function capturarZona(){
@@ -97,6 +115,8 @@ function cambiarZona(unaZona){
 
 function mostrarFormContra(){
     document.getElementById('formContra').style.display = 'block';
+    document.getElementById('formZona').style.display = 'none';
+    document.getElementById('formRiesgo').style.display = 'none';
 }
 
 function capturarContra(){
@@ -105,10 +125,10 @@ function capturarContra(){
 }
 
 function cambiarContra(pass){
-    if(pass && pass.length >= 2 && pass.length <= 8){
+    if(pass && pass.length >= 6 ){
         alert ('la contraseña fue actualizada con éxito');
     }else{
-        alert('Ingrese una contraseña que tenga entre 2 y 8 caracteres')
+        alert('La contraseña debe tener al menos 6 caracteres')
     }
 }
 

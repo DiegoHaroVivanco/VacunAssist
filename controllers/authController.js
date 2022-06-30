@@ -166,35 +166,51 @@ exports.login = async (req, res) => {
 exports.autenticar = (req, res) => {
     try {
         const token = req.body.token
-        console.log(token)
-        console.log(userToken.tokenHash)
-        console.log(token === userToken.tokenHash)
-        //if(await bcryptjs.compare(token, user.tokenHash)){
-        if (token === userToken.tokenHash) {
-            res.render('autenticar', {
-                alert: true,
-                alerTitle: "Token correcto",
-                alertMessage: "Inicio de sesion correcto",
-                alertIcon: 'success',
-                showConfirmButton: true,
-                timer: 2500,
-                ruta: 'areaPersonal'
-            })
-        } else {
-            res.render('autenticar', {
-                alert: true,
-                alerTitle: "Error",
-                alertMessage: "Token de seguridad incorrecto",
-                alertIcon: 'error',
-                showConfirmButton: true,
-                timer: 2500,
-                ruta: 'autenticar'
-            })
-        }
-
+        // console.log(token)
+        // console.log("token local: "+userToken.tokenHash)
+        // console.log(token === userToken.tokenHash)
+        
+        conexion.query("SELECT * FROM Usuarios WHERE token = '"+token+"'", (error, results) => {
+            // console.log("data" +results[0].token)
+            if(results.length == 0){
+                res.render('autenticar', {
+                    alert: true,
+                    alerTitle: "Error",
+                    alertMessage: "Token de seguridad incorrecto",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: 2500,
+                    ruta: 'autenticar'
+                })
+            }else if(results[0].token === token){
+                res.render('autenticar', {
+                    alert: true,
+                    alerTitle: "Token correcto",
+                    alertMessage: "Inicio de sesion correcto",
+                    alertIcon: 'success',
+                    showConfirmButton: true,
+                    timer: 2500,
+                    ruta: 'areaPersonal'
+                })
+            } else {
+                res.render('autenticar', {
+                    alert: true,
+                    alerTitle: "Error",
+                    alertMessage: "Token de seguridad incorrecto",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: 2500,
+                    ruta: 'autenticar'
+                })
+            }
+            
+        })    
+        
     } catch (error) {
         console.log(error)
     }
+
+
 }
 
 exports.isAuthenticated = async (req, res, next) => {
@@ -292,23 +308,38 @@ exports.dataUsuarioPaciente = (req, res) =>{
     })    
 }
 
+exports.dataUsuarios = (req, res) =>{
+    conexion.query('SELECT * FROM Usuarios',(error, results) => {
+
+        if(error) throw error;
+        
+        console.log(results)
+        res.json(results)
+    })
+}
+
 
 exports.cambiarContrasena = async (req, res) =>{
 
     const passTemporal = req.body.pass
     let cookieZona = req.cookies.jwt
     let passHash = await bcryptjs.hash(passTemporal, 8)
-
+    console.log(passTemporal)
     try {
-        conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieZona+"' ", (error, results) => {
-                console.log(results[0])
-                // actualizo la contraseña en la db
-                conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE jsontoken = '"+cookieZona+"'", (error, results)=>{
-                    if(error) throw error;
-                    res.redirect('/areaPersonal/editarperfil')
-                })
+        if(passTemporal.length >= 6){
+            conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieZona+"' ", (error, results) => {
+                    console.log(results[0])
+                    // actualizo la contraseña en la db
+                    conexion.query("UPDATE Usuarios SET Pass = '"+passHash+"' WHERE jsontoken = '"+cookieZona+"'", (error, results)=>{
+                        if(error) throw error;
+                        res.redirect('/areaPersonal/editarperfil')
+                    })
 
-        })        
+            })        
+        }else{
+            res.redirect('/areaPersonal/editarperfil')
+
+        }
     } catch (error) {
         console.log(error)
     }
@@ -345,6 +376,22 @@ exports.cambiarEstadoRiesgo = (req, res) =>{
         conexion.query("UPDATE Usuarios SET riesgo = '"+estado+"' WHERE jsontoken = '"+cookieZona+"'",(error, results) => {
             if(error) throw error;
             res.redirect('/areaPersonal/editarperfil')            
+        })
+    })
+
+}
+
+
+exports.pedirTurnoFiebre = (req, res) =>{
+    let cookieUser = req.cookies.jwt
+
+    conexion.query("SELECT * FROM Usuarios WHERE jsontoken = '"+cookieUser+"' ",(error, results) => {
+        console.log(results[0])
+
+        conexion.query("UPDATE Usuarios SET previo_fiebreA = 1 WHERE jsontoken = '"+cookieUser+"'", (error, results)=>{
+            if(error) throw error;
+            res.redirect('/areaPersonal')
+        
         })
     })
 

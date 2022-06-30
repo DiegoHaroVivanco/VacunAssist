@@ -4,32 +4,61 @@ const vacunatorio2 = document.getElementById("vacunatorio2")
 const vacunatorio3 = document.getElementById("vacunatorio3")
 
 
-document.getElementById("btnmostrar").onclick = (e) =>{
     
-    if (e && "preventDefault" in e) e.preventDefault();
 
-    const listarDatos =  async () =>{
-        try {
-            const response  = await fetch(url,{
-                headers: { "Access-Control-Allow-Origin": `${url}` }
-            });
-            const dataParser = await response.json()
-            console.log(dataParser)
-            return dataParser
-    
-        } catch (error) {
-            console.log(error)
-        }
+const listarDatos =  async () =>{
+    try {
+        const response  = await fetch(url,{
+            headers: { "Access-Control-Allow-Origin": `${url}` }
+        });
+        const dataParser = await response.json()
+        console.log(dataParser)
+        return dataParser
+
+    } catch (error) {
+        console.log(error)
     }
-
-    listarDatos().then(data => {
-        //console.log(data)
-        vacunatorio1.innerHTML = data[0].nombre
-        vacunatorio2.innerHTML = data[1].nombre
-        vacunatorio3.innerHTML = data[2].nombre
-        
-    }).then(mostrarVacunatorios())
 }
+
+listarDatos().then(data => {
+    //console.log(data)
+    document.getElementById('zonaVacunatorio1').innerHTML = "Zona vacunatorio: " + data[0].zona
+    vacunatorio1.innerHTML = "Nombre de vacunatorio: " + data[0].nombre
+    document.getElementById('zonaVacunatorio2').innerHTML = "Zona vacunatorio: " + data[1].zona
+    vacunatorio2.innerHTML = "Nombre de vacunatorio: " + data[1].nombre
+    document.getElementById('zonaVacunatorio3').innerHTML = "Zona vacunatorio: " + data[2].zona
+    vacunatorio3.innerHTML = "Nombre de vacunatorio: " + data[2].nombre
+    
+}).then(mostrarVacunatorios())
+
+
+
+// document.getElementById("btnmostrar").onclick = (e) =>{
+    
+//     if (e && "preventDefault" in e) e.preventDefault();
+
+//     const listarDatos =  async () =>{
+//         try {
+//             const response  = await fetch(url,{
+//                 headers: { "Access-Control-Allow-Origin": `${url}` }
+//             });
+//             const dataParser = await response.json()
+//             console.log(dataParser)
+//             return dataParser
+    
+//         } catch (error) {
+//             console.log(error)
+//         }
+//     }
+
+//     listarDatos().then(data => {
+//         //console.log(data)
+//         vacunatorio1.innerHTML = data[0].nombre
+//         vacunatorio2.innerHTML = data[1].nombre
+//         vacunatorio3.innerHTML = data[2].nombre
+        
+//     }).then(mostrarVacunatorios())
+// }
 
 
 
@@ -44,16 +73,22 @@ function mostrarVacunatorios(){
 
 function mostrar1(){
     document.getElementById('formulario1').style.display = 'block';
+    document.getElementById('formulario2').style.display = 'none';
+    document.getElementById('formulario3').style.display = 'none';
     vac = document.getElementById("vacunatorio1");
 }
 
 function mostrar2(){
     document.getElementById('formulario2').style.display = 'block';
+    document.getElementById('formulario1').style.display = 'none';
+    document.getElementById('formulario3').style.display = 'none';
     vac = document.getElementById("vacunatorio2");
 }
 
 function mostrar3(){
     document.getElementById('formulario3').style.display = 'block';
+    document.getElementById('formulario1').style.display = 'none';
+    document.getElementById('formulario2').style.display = 'none';
     vac = document.getElementById("vacunatorio3");
 }
 

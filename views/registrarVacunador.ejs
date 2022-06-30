@@ -30,11 +30,16 @@
                     
                 </div>
                 <div class="row">
-                    <h3 class="descriph3">DNI</h3>
+                    <h3 class="descriph3">DNI (sin puntos)</h3>
                     <i class="fa-solid fa-dna"></i>
-                    <input type="text" name="dni" placeholder="DNI" required>
+                    <input id="dni" type="text" name="dni" placeholder="DNI" required>
                     
                 </div>
+   
+                <div class="btn-validar row button lin btnregis">
+                    <button class="btn" type="submit"> Validar DNI </button>             
+                </div> 
+
                 <div class="row">
                     <h3 class="descriph3">Fecha de Nacimiento</h3>
 
@@ -63,18 +68,19 @@
                     
                 </div>
                 <div class="row button btnregis">
-                    <input type="submit" value="Registrar">                
+                    <input id="bnt-registrar" type="submit" value="Registrar">                
                 </div>
 
                 <div class="row button lin">
                     <a class="btn" href="/areaPersonalAdmin" type="button">Cancelar</a>                
                 </div>
             </form>
+
         </div>
 
     </div>
     <script src="https://kit.fontawesome.com/fdbbc110b3.js" crossorigin="anonymous"></script>
-
+    <script src="../public/admins/js/registrarvacunador.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <% if(alert) { %>
