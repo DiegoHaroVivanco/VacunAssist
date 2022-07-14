@@ -9,6 +9,8 @@ const conexion = mysql.createConnection({
     database: 'Vacunassist'
 })
 
+
+
 // const conexion = mysql.createConnection({
 //     host: conf.production.host,
 //     user: conf.production.username,

@@ -345,11 +345,12 @@ function cambiarStock(stockAct, stockNuevo){
     //     alert('El stock se actualizó con éxito');
     // }
     // else alert('Ingrese un valor válido');
-    if(stockNuevo != 0 && ((stockNuevo <= 0) ? (stockNuevo * -1)  <= stockAct : true) ){
+    if ((stockNuevo <= 0) ? (stockNuevo * -1)  <= stockAct : true) {
         alert('El stock se actualizó con éxito');
     }else{
-        alert('Ingrese un valor válido');
+        alert('El stock no puede quedar con un valor negativo, vuelva a intentarlo');
     }
 }
+
 
 // let stock = document.getElementById('gripe1').textContent.substring(15) falta parsearlo a int
